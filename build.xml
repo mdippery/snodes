@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Copyright (c) 2007-2008 Michael Schoonmaker <michael.r.schoonmaker@gmail.com>
+	Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
+	
+	This program is free software; you can redistribute it and/or modify it
+	under the terms of the GNU General Public License as published by the Free
+	Software Foundation; either version 2 of the License, or (at your option)
+	any later version.
+	
+	This program is distributed in the hope that it will be useful, but WITHOUT
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+	FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+	more details.
+	
+	You should have received a copy of the GNU General Public License along
+	with this program; if not, write to the Free Software Foundation, Inc.,
+	51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+	
+	
+	Contributor(s):
+	  Michael Dippery <mdippery@bucknell.edu>
+-->
+
+<project name="snodes" default="jar">
+	<property name="project.name" value="Spaghetti Nodes"/>
+	<property name="project.name.short" value="Snodes"/>
+	<property name="project.version" value="0.1alpha"/>
+	<property name="main.class" value="snodes.ControllerMain"/>
+	
+	<property name="build.debug" value="true"/>
+	<property name="docs.access" value="protected"/>
+	
+	<property name="build.dir" value="build"/>
+	<property name="src.dir" value="src"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="docs.dir" value="docs/api"/>
+	<property name="dist.dir" value="."/>
+	<property name="dist.jar" value="${project.name.short}.jar"/>
+	<property name="dist.zip" value="${project.name.short}-${project.version}.zip"/>
+	
+	<property name="resources.dir" value="share"/>
+	
+	<property name="test.unit.dir" value="test/unit-testing"/>
+	<property name="test.unit.src.dir" value="${test.unit.dir}/src"/>
+	<property name="test.unit.build.dir" value="${test.unit.dir}/build"/>
+	
+	<property name="test.fs.dir" value="test/fs"/>
+	
+	<property name="test.net.dir" value="test/net"/>
+	
+	<target name="build" description="Compiles the Java source code into bytecode">
+		<mkdir dir="${build.dir}"/>
+		<javac
+			srcdir="${src.dir}"
+			destdir="${build.dir}"
+			source="1.5"
+			debug="${build.debug}"
+		>
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+	</target>
+	
+	<target name="jar" depends="build" description="Builds the project's JAR file">
+		<mkdir dir="${dist.dir}"/>
+		<jar destfile="${dist.dir}/${dist.jar}">
+			<fileset dir="${build.dir}" includes="**/*.class"/>
+			<fileset dir="${resources.dir}"/>
+			<manifest>
+				<attribute name="Main-Class" value="${main.class}"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target
+		name="test-build"
+		depends="build"
+		description="Compiles test source code into Java bytecode"
+	>
+		<mkdir dir="${test.unit.build.dir}"/>
+		<javac
+			srcdir="${test.unit.src.dir}"
+			destdir="${test.unit.build.dir}"
+			source="1.5"
+			debug="true"
+			classpath="${build.dir}"
+		/>
+	</target>
+	
+	<target name="test" depends="test-build" description="Runs JUnit test cases">
+		<junit haltonfailure="true" printsummary="false">
+			<classpath path="${test.unit.build.dir}:${build.dir}"/>
+			<formatter type="brief" usefile="false"/>
+			<batchtest>
+				<fileset dir="${test.unit.build.dir}" includes="**/Test*.class"/>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="test-fs" depends="build" description="Runs the file system test">
+		<javac
+			srcdir="${test.fs.dir}"
+			destdir="${test.fs.dir}"
+			source="1.5"
+			debug="true"
+			classpath="${build.dir}"
+		/>
+		<java
+			classname="FSTest"
+			classpath="${test.fs.dir}:${build.dir}"
+			fork="true"
+			dir="${test.fs.dir}"
+		/>
+	</target>
+	
+	<target name="test-net" depends="build" description="Runs the network test">
+		<javac
+			srcdir="${test.net.dir}"
+			destdir="${test.net.dir}"
+			source="1.5"
+			debug="true"
+			classpath="${build.dir}"
+		/>
+		<java
+			classname="NetTest"
+			classpath="${test.net.dir}:${build.dir}"
+			fork="true"
+			dir="${test.net.dir}"
+		/>
+	</target>
+	
+	<target name="docs" description="Creates the Javadocs">
+		<mkdir dir="${docs.dir}"/>
+		<javadoc
+			sourcepath="${src.dir}"
+			destdir="${docs.dir}"
+			packagenames="
+				snodes,
+				snodes.command,
+				snodes.command.Connection,
+				snodes.command.Search,
+				snodes.command.Shares,
+				snodes.command.System,
+				snodes.command.Transfer,
+				snodes.crypto,
+				snodes.fs,
+				snodes.gui,
+				snodes.net,
+				snodes.util,
+				snodes.util.logging,
+				net.jcip.annotations,
+				org.bouncycastle.crypto,
+				org.bouncycastle.crypto.engines,
+				org.bouncycastle.crypto.params,
+				org.bouncycastle.crypto.paddings"
+			overview="${src.dir}/overview.html"
+			windowtitle="${project.name} ${project.version}"
+			source="1.5"
+			author="true"
+			version="false"
+			access="${docs.access}"
+		>
+			<group title="Core">
+				<package name="snodes"/>
+				<package name="snodes.crypto"/>
+				<package name="snodes.fs"/>
+				<package name="snodes.net"/>
+				<package name="snodes.util"/>
+				<package name="snodes.util.logging"/>
+			</group>
+			<group title="User Interface">
+				<package name="snodes.command"/>
+				<package name="snodes.command.Connection"/>
+				<package name="snodes.command.Search"/>
+				<package name="snodes.command.Shares"/>
+				<package name="snodes.command.System"/>
+				<package name="snodes.command.Transfer"/>
+				<package name="snodes.gui"/>
+			</group>
+			<group title="Encryption">
+				<package name="org.bouncycastle.crypto"/>
+				<package name="org.bouncycastle.crypto.engines"/>
+				<package name="org.bouncycastle.crypto.params"/>
+				<package name="org.bouncycastle.crypto.paddings"/>
+			</group>
+			<group title="Extras">
+				<package name="net.jcip.annotations"/>
+			</group>
+		</javadoc>
+	</target>
+	
+	<target
+		name="all"
+		depends="jar, docs"
+		description="Builds the JAR file and documentation"
+	/>
+	
+	<target name="dist" depends="jar" description="Creates a distributable ZIP archive">
+		<zip zipfile="${dist.dir}/${dist.zip}">
+			<fileset file="${dist.dir}/${dist.jar}"/>
+		</zip>
+	</target>
+	
+	<target name="clean-dist" description="Cleans up distribution files">
+		<delete file="${dist.dir}/${dist.zip}"/>
+	</target>
+	
+	<target name="clean-test" description="Tests up intermediate test build files">
+		<delete dir="${test.unit.build.dir}"/>
+		<delete>
+			<fileset dir="${test.fs.dir}" includes="*.class"/>
+		</delete>
+		<delete dir="${test.fs.dir}/data"/>
+		<delete>
+			<fileset dir="${test.net.dir}" includes="*.class"/>
+		</delete>
+	</target>
+	
+	<target
+		name="clean"
+		depends="clean-test, clean-dist"
+		description="Cleans up intermediate build files"
+	>
+		<delete dir="${build.dir}"/>
+		<delete dir="${docs.dir}"/>
+		<delete file="${dist.dir}/${dist.jar}"/>
+		<delete file="log.txt"/>
+	</target>
+</project>
