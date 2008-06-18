@@ -22,39 +22,18 @@
 #   Michael Dippery <mdippery@bucknell.edu>
 
 
-# This could probably be written in a better way, so if any Unix wizard feels
-# like taking a look at it, please do. I suck at writing shell scripts. - mpd
-
+SNODES_BASE=/usr/local
 SNODES_JAR=Snodes.jar
-SNODES_BIN=snodes
-SNODES_DIR=/usr/local/share/snodes
+SNODES_SCRIPT=snodes
+SNODES_BIN=$SNODES_BASE/bin
+SNODES_DIR=$SNODES_BASE/share/snodes
 
-mkdir -p $SNODES_DIR &>/dev/null
-if [ $? -eq 0 ]; then
-    cp $SNODES_JAR $SNODES_DIR &>/dev/null
-    if [ $? -eq 0 ]; then
-        echo "Installed Snodes JAR in $SNODES_DIR"
-    else
-        echo "Could not install JAR in $SNODES_DIR"
-        exit 1
-    fi
-    
-    mkdir -p /usr/local/bin &>/dev/null
-    if [ $? -eq 0 ]; then
-        cp $SNODES_BIN /usr/local/bin &>/dev/null
-        if [ $? -eq 0 ]; then
-            echo "Installed launcher script in /usr/local/bin"        
-            echo "Snodes installed successfully! Type 'snodes -h' to view help information."
-            exit 0
-        else
-            echo "Could not copy launcher script to /usr/local/bin"
-            exit 1
-        fi
-    else
-        echo "Could not create directory: /usr/local/bin"
-        exit 1
-    fi
+if [ -e Snodes.jar ]; then
+    install -v -d $SNODES_DIR
+    install -v -m 0644 $SNODES_JAR $SNODES_DIR
+    install -v $SNODES_SCRIPT $SNODES_BIN
+    exit 0
 else
-    echo "Could not create directory: $SNODES_DIR"
+    echo "Cannot find $SNODES_JAR. Are you sure you built Snodes?"
     exit 1
 fi
