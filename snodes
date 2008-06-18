@@ -23,7 +23,11 @@
 
 
 if [ "$SNODES_HOME" = "" ]; then
-    SNODES_PATH=/usr/local/share/snodes/Snodes.jar
+    if [ -e ./Snodes.jar ]; then
+        SNODES_PATH=Snodes.jar
+    else
+        SNODES_PATH=/usr/local/share/snodes/Snodes.jar
+    fi
 else
     SNODES_PATH=$SNODES_HOME/Snodes.jar
 fi
