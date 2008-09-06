@@ -225,6 +225,6 @@
         <delete dir="${build.dir}"/>
         <delete dir="${docs.dir}"/>
         <delete file="${dist.dir}/${dist.jar}"/>
-        <delete file="log.txt"/>
+        <delete file="snodes.log"/>
     </target>
 </project>

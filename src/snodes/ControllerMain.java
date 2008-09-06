@@ -48,7 +48,7 @@ public final class ControllerMain {
     /** The system's log object. */
     private static final Logger logger = Logger.getLogger("snodes");
     /** The path to the log file. */
-    private static final String LOG_PATH = "log.txt";
+    private static final String LOG_PATH = "snodes.log";
     
     /**
      * The main executable method of the program.<p>
