@@ -78,12 +78,15 @@ public final class ControllerMain {
 			Args.ArgTuple arg = (Args.ArgTuple) tmparg;
 			if (arg.arg.equals("h")) {
 				showHelp();
+				//System.err.println("Help: ON");
 			} else if (arg.arg.equals("q")) {
 				logToConsole = true;
 				level = Level.INFO;
+				//System.err.println("Quiet: ON");
 			} else if (arg.arg.equals("d")) {
 				level = Level.ALL;
 				deleteLog();
+				//System.err.println("Debug: ON");
 			}
 		}
 		

@@ -6,8 +6,10 @@
 
 package snodes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 
@@ -229,6 +231,10 @@ public class Args implements Iterable<Map.Entry<String, String>>
     {
         /** The owner object. */
         private Args obj;
+        /** The list of all "present" keys. */
+        private List<String> present;
+        /** The wrapped iterator. */
+        private Iterator<String> it;
 
         /**
          * Creates a new iterator.
@@ -239,6 +245,15 @@ public class Args implements Iterable<Map.Entry<String, String>>
         public ArgsIterator(Args obj)
         {
             this.obj = obj;
+            this.present = new ArrayList<String>();
+
+            for (String arg : obj.args.keySet()) {
+                OptionWrapper w = obj.args.get(arg);
+                assert w != null : "args should contain w";
+                if (w.present) present.add(arg);
+            }
+
+            this.it = this.present.iterator();
         }
 
         /**
@@ -249,7 +264,7 @@ public class Args implements Iterable<Map.Entry<String, String>>
          */
         public boolean hasNext()
         {
-            return obj.args.keySet().iterator().hasNext();
+            return it.hasNext();
         }
 
         /**
@@ -264,14 +279,10 @@ public class Args implements Iterable<Map.Entry<String, String>>
          */
         public Map.Entry<String, String> next()
         {
-            String next = null;
-            OptionWrapper w = null;
-
-            do {
-                next = obj.args.keySet().iterator().next();
-                w = obj.args.get(w);
-            } while (w == null || !w.present);
-
+            String next = it.next();
+            OptionWrapper w = obj.args.get(next);
+            assert w != null : "args should contain w";
+            assert w.present : "w should be present";
             return new ArgTuple(next, w.val);
         }
 
