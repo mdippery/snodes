@@ -7,7 +7,7 @@ Git, you can download it from http://git.or.cz/.
 The "authoritative" Snodes repo is maintained by Michael Dippery, and is
 read-only. To clone a copy of the repo:
 
-``git clone git://linuxcomp3.eg.bucknell.edu/~mdippery/snodes/snodes.git``
+``git clone git://github.com/mdippery/snodes.git``
 
 2. BUILDING
 ===========
