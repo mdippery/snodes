@@ -27,6 +27,7 @@ import snodes.util.logging.FileFormatter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -70,15 +71,17 @@ public final class ControllerMain {
 		SnodesServer server = SnodesServer.getInstance();
 		Level level = DEFAULT_LEVEL;
 		boolean logToConsole = false;
-		
-		// Parse command-line options
-		for (final String arg : args) {
-			if ("-h".equals(arg)) {
+
+		Args argsObj = new Args("hqd", null);
+		argsObj.parse(args);
+		for (Map.Entry<String, String> tmparg : argsObj) {
+			Args.ArgTuple arg = (Args.ArgTuple) tmparg;
+			if (arg.arg.equals("h")) {
 				showHelp();
-			} else if ("-q".equals(arg)) {
+			} else if (arg.arg.equals("q")) {
 				logToConsole = true;
 				level = Level.INFO;
-			} else if ("-d".equals(arg)) {
+			} else if (arg.arg.equals("d")) {
 				level = Level.ALL;
 				deleteLog();
 			}

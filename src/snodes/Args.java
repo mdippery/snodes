@@ -8,6 +8,7 @@ package snodes;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -20,7 +21,7 @@ import java.util.Iterator;
  * @author Michael Dippery
  * @version 0.2
  */
-public class Args implements Iterable<String>
+public class Args implements Iterable<Map.Entry<String, String>>
 {
     /** The list of all arguments. */
     private HashMap<String, OptionWrapper> args;
@@ -162,6 +163,7 @@ public class Args implements Iterable<String>
             }
 
             OptionWrapper w = args.get(arg);
+            assert w != null : ("args contains " + arg + "!");
             if (w.required) {
                 if (longArg) {
                     String[] cl = arg.split("=");
@@ -181,32 +183,11 @@ public class Args implements Iterable<String>
                     }
                 }
             }
+            w.present = true;
 
             return newIdx;
         } else {
             throw new IllegalArgumentException(arg);
-        }
-    }
-
-    /**
-     * Gets the value for an option.
-     *
-     * @param opt
-     *   The option
-     *
-     * @return
-     *   The value for that option, or <tt>null</tt> if no value was
-     *   specified.
-     *
-     * @throws IllegalArgumentException
-     *   If <tt>opt</tt> is an invalid or unrecognized option.
-     */
-    public String getValue(String opt) throws IllegalArgumentException
-    {
-        if (args.containsKey(opt)) {
-            return args.get(opt).val;
-        } else {
-            throw new IllegalArgumentException(opt);
         }
     }
 
@@ -216,9 +197,9 @@ public class Args implements Iterable<String>
      * @return
      *   An iterator.
      */
-    public Iterator<String> iterator()
+    public Iterator<Map.Entry<String, String>> iterator()
     {
-        return args.keySet().iterator();
+        return new ArgsIterator(this);
     }
 
 
@@ -229,12 +210,181 @@ public class Args implements Iterable<String>
         private boolean required;
         /** The value of the option, or <tt>null</tt>. */
         private String val;
+        /** A flag specifying whether the user specified the option. */
+        private boolean present;
 
         /** Creates a new, empty wrapper object. */
         private OptionWrapper()
         {
             this.required = false;
             this.val = null;
+            this.present = false;
+        }
+    }
+
+
+    /** The <tt>Args</tt> object iterator. */
+    private static class ArgsIterator
+        implements Iterator<Map.Entry<String, String>>
+    {
+        /** The owner object. */
+        private Args obj;
+
+        /**
+         * Creates a new iterator.
+         *
+         * @param obj
+         *   The owner instance.
+         */
+        public ArgsIterator(Args obj)
+        {
+            this.obj = obj;
+        }
+
+        /**
+         * Returns <tt>true</tt> if there are more elements in the collection.
+         *
+         * @return
+         *   <tt>true</tt> if there are more elements.
+         */
+        public boolean hasNext()
+        {
+            return obj.args.keySet().iterator().hasNext();
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return
+         *   A 2-tuple consisting of the argument and any value associated
+         *   with the argument.
+         *
+         * @throws NoSuchElementException
+         *   If there are no more elements in the iteration.
+         */
+        public Map.Entry<String, String> next()
+        {
+            String next = null;
+            OptionWrapper w = null;
+
+            do {
+                next = obj.args.keySet().iterator().next();
+                w = obj.args.get(w);
+            } while (w == null || !w.present);
+
+            return new ArgTuple(next, w.val);
+        }
+
+        /**
+         * Removes the last item returned by {@link next} from the underlying
+         * collection.
+         *
+         * @throws UnsupportedOperationException
+         *   This operation is not supported.
+         */
+        public void remove()
+        {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+
+    /** A 2-tuple consisting of (arg, val). */
+    public static class ArgTuple implements Map.Entry<String, String>
+    {
+        /** The argument. */
+        public final String arg;
+        /** The value. */
+        public final String val;
+
+        /**
+         * Creates a new tuple.
+         *
+         * @param arg
+         *   The name of the argument.
+         * @param val
+         *   The value of the argument.
+         */
+        private ArgTuple(String arg, String val)
+        {
+            this.arg = arg;
+            this.val = val;
+        }
+
+        /**
+         * Returns the name of the argument.
+         *
+         * @return
+         *   The argument.
+         */
+        public String getKey()
+        {
+            return arg;
+        }
+
+        /**
+         * Returns the value associated with the argument.
+         *
+         * @return
+         *   The argument's value.
+         */
+        public String getValue()
+        {
+            return val;
+        }
+
+        /**
+         * Replaces the value with a new value.
+         *
+         * @param value
+         *   The new value.
+         *
+         * @return
+         *   The old value.
+         *
+         * @throws UnsupportedOperationException
+         *   This operation is not supported.
+         */
+        public String setValue(String value)
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Determines if this object is equal to another object.
+         *
+         * @param o
+         *   The other object.
+         *
+         * @return
+         *   <tt>true</tt> if the other object is a map that maps to the
+         *   same thing.
+         */
+        @Override
+        public boolean equals(Object o)
+        {
+            if (this == o) {
+                return true;
+            } else if (o == null || o.getClass() != getClass()) {
+                return false;
+            } else {
+                ArgTuple at = (ArgTuple) o;
+                return (arg.equals(at.arg) && (val.equals(at.val)));
+            }
+        }
+
+        /**
+         * Returns the hash code for the tuple.
+         *
+         * @return
+         *   The hash code.
+         */
+        @Override
+        public int hashCode()
+        {
+            int argHash = (arg != null ? arg.hashCode() : 0);
+            int valHash = (val != null ? val.hashCode() : 0);
+            return argHash ^ valHash;
         }
     }
 }
