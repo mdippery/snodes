@@ -84,6 +84,7 @@ public class Args implements Iterable<String>
             OptionWrapper v = new OptionWrapper();
             if ((i+1) < sargs.length() && sargs.charAt(i+1) == ':') {
                 v.required = true;
+                i++;
             }
             args.put(k, v);
         }
@@ -99,12 +100,10 @@ public class Args implements Iterable<String>
     {
         if (largs == null) return;
 
-        int i = 0;
-        for (i = 0; i < largs.length; i++) {
-            String k = largs[i];
+        for (String arg : largs) {
             OptionWrapper v = new OptionWrapper();
-            if (largs[i].endsWith("=")) v.required = true;
-            args.put(k, v);
+            if (arg.endsWith("=")) v.required = true;
+            args.put(arg, v);
         }
     }
 
@@ -120,10 +119,94 @@ public class Args implements Iterable<String>
      * @throws IllegalArgumentException
      *   If an invalid or unrecognized option is encountered.
      */
-    public void parse(String[] opts)
+    public void parse(String[] opts) throws IllegalArgumentException
     {
-        for (String opt : opts) {
-            // Process
+        for (int i = 0; i < opts.length; ) {
+            String opt = opts[i];
+            if (opt.startsWith("-")) {
+                i = processArg(opts, i);
+            } else {
+                throw new IllegalArgumentException(opt);
+            }
+        }
+    }
+
+    /**
+     * Processes a single argument.
+     *
+     * @param opts
+     *   The list of options.
+     *
+     * @param idx
+     *   The current index into the array.
+     *
+     * @return
+     *   The new index.
+     *
+     * @throws IllegalArgumentException
+     *   If the argument is invalid or unrecognized.
+     */
+    private int processArg(String[] opts, int idx)
+        throws IllegalArgumentException
+    {
+        String arg = opts[idx];
+        int newIdx = idx+1;
+        if (arg.contains(arg)) {
+            boolean longArg = false;
+            if (arg.startsWith("--")) {
+                arg = arg.substring(2);
+                longArg = true;
+            } else if (arg.startsWith("-")) {
+                arg = arg.substring(1);
+                longArg = false;
+            }
+
+            OptionWrapper w = args.get(arg);
+            if (w.required) {
+                if (longArg) {
+                    String[] cl = arg.split("=");
+                    if (cl.length == 2) {
+                        w.val = cl[1].substring(1);
+                    } else {
+                        throw new IllegalArgumentException(arg + " requires "
+                                                           + "a value");
+                    }
+                } else {
+                    if (!opts[idx+1].startsWith("-")) {
+                        w.val = opts[idx+1];
+                        newIdx++;
+                    } else {
+                        throw new IllegalArgumentException(arg + " requires a "
+                                                           + "value");
+                    }
+                }
+            }
+
+            return newIdx;
+        } else {
+            throw new IllegalArgumentException(arg);
+        }
+    }
+
+    /**
+     * Gets the value for an option.
+     *
+     * @param opt
+     *   The option
+     *
+     * @return
+     *   The value for that option, or <tt>null</tt> if no value was
+     *   specified.
+     *
+     * @throws IllegalArgumentException
+     *   If <tt>opt</tt> is an invalid or unrecognized option.
+     */
+    public String getValue(String opt) throws IllegalArgumentException
+    {
+        if (args.containsKey(opt)) {
+            return args.get(opt).val;
+        } else {
+            throw new IllegalArgumentException(opt);
         }
     }
 
