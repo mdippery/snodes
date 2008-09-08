@@ -6,10 +6,8 @@
 
 package snodes;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.logging.Logger;
 
 
 /**
@@ -24,15 +22,8 @@ import java.util.logging.Logger;
  */
 public class Args implements Iterable<String>
 {
-    /** The class logger. */
-    private static final Logger logger = Logger.getLogger("snodes");
-
     /** The list of all arguments. */
-    private String[] args;
-    /** The list of all values. */
-    private String[] vals;
-    /** The list of arguments that require values. */
-    private boolean[] requireVals;
+    private HashMap<String, OptionWrapper> args;
 
     /**
      * Creates a new argument object.
@@ -58,23 +49,12 @@ public class Args implements Iterable<String>
         throws IllegalArgumentException
     {
         int size = 0;
+        size += (shortArgs != null) ? shortArgs.length() : 0;
+        size += (longArgs != null) ? longArgs.length : 0;
+        args = new HashMap<String, OptionWrapper>();
 
-        if (shortArgs != null) size += shortArgs.length();
-        if (longArgs != null) size += longArgs.length;
-        args = new String[size];
-        vals = new String[size];
-        Arrays.fill(vals, null);
-        requireVals = new boolean[size];
-        Arrays.fill(requireVals, false);
-
-        int idx = processShortArgs(shortArgs, 0);
-        idx = processLongArgs(longArgs, idx);
-        if (idx < size) {
-            logger.info("Resizing args list from " + size + " to " + idx);
-            String[] newArgs = new String[idx];
-            System.arraycopy(args, 0, newArgs, 0, idx);
-            args = newArgs;
-        }
+        processShortArgs(shortArgs);
+        processLongArgs(longArgs);
     }
 
     /**
@@ -83,22 +63,15 @@ public class Args implements Iterable<String>
      * @param sargs
      *   The list of arguments.
      *
-     * @param idx
-     *   The current index into the <tt>args</tt> instance variable.
-     *
-     * @return
-     *   The new index into the <tt>args</tt> instance variable.
-     *
      * @throws IllegalArgumentException
      *   If any argument is invalid.
      *
      */
-    private int processShortArgs(String sargs, int idx)
+    private void processShortArgs(String sargs)
     {
-        if (sargs == null) return idx;
+        if (sargs == null) return;
 
-        int i = 0;
-        for (i = 0; i < sargs.length(); i++) {
+        for (int i = 0; i < sargs.length(); i++) {
             char arg = sargs.charAt(i);
 
             if (!Character.isLetter(arg)) {
@@ -107,14 +80,13 @@ public class Args implements Iterable<String>
                                                    + "argument");
             }
 
-            args[idx+i] = String.valueOf(arg);
+            String k = String.valueOf(arg);
+            OptionWrapper v = new OptionWrapper();
             if ((i+1) < sargs.length() && sargs.charAt(i+1) == ':') {
-                requireVals[idx+i+1] = true;
-                i++;
+                v.required = true;
             }
+            args.put(k, v);
         }
-
-        return idx+i;
     }
 
     /**
@@ -122,26 +94,37 @@ public class Args implements Iterable<String>
      *
      * @param largs
      *   The arguments.
-     *
-     * @param idx
-     *   The current index into the <tt>args</tt> array.
-     *
-     * @return
-     *   The new index into the <tt>args</tt> array.
      */
-    private int processLongArgs(String[] largs, int idx)
+    private void processLongArgs(String[] largs)
     {
-        if (largs == null) return idx;
+        if (largs == null) return;
 
         int i = 0;
         for (i = 0; i < largs.length; i++) {
-            args[idx+i] = largs[i];
-            if (largs[i].endsWith("=")) {
-                requireVals[idx+i] = true;
-            }
+            String k = largs[i];
+            OptionWrapper v = new OptionWrapper();
+            if (largs[i].endsWith("=")) v.required = true;
+            args.put(k, v);
         }
+    }
 
-        return idx+i;
+    /**
+     * Processes the given arguments.<p>
+     *
+     * After processing the arguments, you may walk through a loop to return
+     * any valid argument and argument value passed to the program.
+     *
+     * @param opts
+     *   The command-line arguments passed to the program.
+     *
+     * @throws IllegalArgumentException
+     *   If an invalid or unrecognized option is encountered.
+     */
+    public void parse(String[] opts)
+    {
+        for (String opt : opts) {
+            // Process
+        }
     }
 
     /**
@@ -152,68 +135,23 @@ public class Args implements Iterable<String>
      */
     public Iterator<String> iterator()
     {
-        return new ArgsIterator(this);
+        return args.keySet().iterator();
     }
 
 
-    /** An iterator for an <tt>Args</tt> object. */
-    private static class ArgsIterator implements Iterator<String>
+    /** A mapping of argument value requirements to values. */
+    private static class OptionWrapper
     {
-        /** The iterator's owner. */
-        private Args obj;
-        /** The current index into the owner's data structures. */
-        private int cur;
+        /** A flag specifying whether an option is required. */
+        private boolean required;
+        /** The value of the option, or <tt>null</tt>. */
+        private String val;
 
-        /**
-         * Creates a new iterator.
-         *
-         * @param obj
-         *   The parent object.
-         */
-        private ArgsIterator(Args obj)
+        /** Creates a new, empty wrapper object. */
+        private OptionWrapper()
         {
-            this.obj = obj;
-            this.cur = 0;
-        }
-
-        /**
-         * Returns <tt>true</tt> if the iterator contains more elements.
-         *
-         * @return
-         *   <tt>true</tt> if the iterator contains more elements.
-         */
-        public boolean hasNext()
-        {
-            return cur < obj.args.length;
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         *
-         * @return
-         *   The next element in the iteration.
-         * @throws NoSuchElementException
-         *   If the iteration contains no more elements.
-         */
-        public String next() throws NoSuchElementException
-        {
-            try {
-                return obj.args[cur++];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                throw new NoSuchElementException();
-            }
-        }
-
-        /**
-         * Removes an item from the underlying collection.
-         *
-         * @throws UnsupportedOperationException
-         *   If the operation is not supported by this iterator.
-         *   <tt>ArgsIterator</tt> does not support this operation.
-         */
-        public void remove() throws UnsupportedOperationException
-        {
-            throw new UnsupportedOperationException();
+            this.required = false;
+            this.val = null;
         }
     }
 }
