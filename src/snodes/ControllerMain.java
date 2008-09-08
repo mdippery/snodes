@@ -73,7 +73,12 @@ public final class ControllerMain {
 		boolean logToConsole = false;
 
 		Args argsObj = new Args("hqd", null);
-		argsObj.parse(args);
+		try {
+			argsObj.parse(args);
+		} catch (IllegalArgumentException e) {
+			showHelp();
+			System.exit(1);
+		}
 		for (Map.Entry<String, String> tmparg : argsObj) {
 			Args.ArgTuple arg = (Args.ArgTuple) tmparg;
 			if (arg.arg.equals("h")) {

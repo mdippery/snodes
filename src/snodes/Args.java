@@ -129,6 +129,9 @@ public class Args implements Iterable<Map.Entry<String, String>>
             if (opt.startsWith("-")) {
                 i = processArg(opts, i);
             } else {
+                // TODO: Handle "compacted" arguments; e.g, if
+                // the program accepted `-v -d', allow user to
+                // pass argument like '-dv'.
                 throw new IllegalArgumentException(opt);
             }
         }
@@ -152,9 +155,9 @@ public class Args implements Iterable<Map.Entry<String, String>>
     private int processArg(String[] opts, int idx)
         throws IllegalArgumentException
     {
-        String arg = opts[idx];
+        String arg = opts[idx].substring(1);	// Trim off dash
         int newIdx = idx+1;
-        if (arg.contains(arg)) {
+        if (args.containsKey(arg)) {
             boolean longArg = false;
             if (arg.startsWith("--")) {
                 arg = arg.substring(2);
@@ -165,7 +168,7 @@ public class Args implements Iterable<Map.Entry<String, String>>
             }
 
             OptionWrapper w = args.get(arg);
-            assert w != null : ("args contains " + arg + "!");
+            assert w != null : ("args contains '" + arg + "'!");
             if (w.required) {
                 if (longArg) {
                     String[] cl = arg.split("=");
