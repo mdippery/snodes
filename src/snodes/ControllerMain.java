@@ -1,4 +1,3 @@
-/* -*-    indent-tabs-mode:t; tab-width:4; c-basic-offset:4    -*- */
 /*
  * Copyright (c) 2007-2008 Michael Schoonmaker <michael.r.schoonmaker@gmail.com>
  * Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
@@ -43,114 +42,114 @@ import java.util.logging.Logger;
  * @version 0.1
  */
 public final class ControllerMain {
-	
-	/** The default logging level. */
-	private static final Level DEFAULT_LEVEL = Level.FINE;
-	/** The system's log object. */
-	private static final Logger logger = Logger.getLogger("snodes");
-	/** The path to the log file. */
-	private static final String LOG_PATH = "log.txt";
-	
-	/**
-	 * The main executable method of the program.<p>
-	 *
-	 * The following command-line arguments are accepted:<p>
-	 *
-	 * <pre>
-	 * -h     Print a help message and exit
-	 * -q     Don't print debugging info to a log file
-	 * -d     Print all debug messages, and delete old log files
-	 * </pre>
-	 *
-	 * @param args
-	 *     The command line arguments.
-	 */
-	public static void main(String[] args)
-	{
-		Controller controller = null;
-		SnodesServer server = SnodesServer.getInstance();
-		Level level = DEFAULT_LEVEL;
-		boolean logToConsole = false;
+    
+    /** The default logging level. */
+    private static final Level DEFAULT_LEVEL = Level.FINE;
+    /** The system's log object. */
+    private static final Logger logger = Logger.getLogger("snodes");
+    /** The path to the log file. */
+    private static final String LOG_PATH = "log.txt";
+    
+    /**
+     * The main executable method of the program.<p>
+     *
+     * The following command-line arguments are accepted:<p>
+     *
+     * <pre>
+     * -h     Print a help message and exit
+     * -q     Don't print debugging info to a log file
+     * -d     Print all debug messages, and delete old log files
+     * </pre>
+     *
+     * @param args
+     *     The command line arguments.
+     */
+    public static void main(String[] args)
+    {
+        Controller controller = null;
+        SnodesServer server = SnodesServer.getInstance();
+        Level level = DEFAULT_LEVEL;
+        boolean logToConsole = false;
 
-		Args argsObj = new Args("hqd", null);
-		try {
-			argsObj.parse(args);
-		} catch (IllegalArgumentException e) {
-			showHelp();
-			System.exit(1);
-		}
-		for (Map.Entry<String, String> tmparg : argsObj) {
-			Args.ArgTuple arg = (Args.ArgTuple) tmparg;
-			if (arg.arg.equals("h")) {
-				showHelp();
-				//System.err.println("Help: ON");
-			} else if (arg.arg.equals("q")) {
-				logToConsole = true;
-				level = Level.INFO;
-				//System.err.println("Quiet: ON");
-			} else if (arg.arg.equals("d")) {
-				level = Level.ALL;
-				deleteLog();
-				//System.err.println("Debug: ON");
-			}
-		}
-		
-		if (!logToConsole) {
-			try {
-				initFileLogger(level);
-			} catch (IOException e) {
-				initConsoleLogger(level);
-			}
-		} else {
-			initConsoleLogger(level);
-		}
-		
-		logger.info("Configured Snodes. Starting program.");
-		
-		controller = GUIController.getInstance();
-		server.setConnectionManager(controller);
-		server.start();
-	}
-	
-	private static void showHelp()
-	{
-		System.err.println(
-			Controller.NAME + "\n" +
-			"-h    Print help message and exit\n" +
-			"-q    Print debugging info to console\n" +
-			"-d    Print all debug messages, and delete old log files"
-		);
-		System.exit(0);
-	}
-	
-	private static void initConsoleLogger(Level level)
-	{
-		ConsoleHandler ch = new ConsoleHandler();
-		ch.setFormatter(new ConsoleFormatter());
-		ch.setLevel(level);
-		logger.addHandler(ch);
-		logger.setLevel(level);
-		logger.setUseParentHandlers(false);
-	}
-	
-	private static void initFileLogger(Level level) throws IOException
-	{
-		FileHandler fh = new FileHandler(LOG_PATH, true); // true = append
-		ConsoleHandler ch = new ConsoleHandler();
-		fh.setFormatter(new FileFormatter());
-		ch.setFormatter(new ConsoleFormatter());
-		ch.setLevel(Level.WARNING); // Also print important messages to console
-		logger.addHandler(fh);
-		logger.addHandler(ch);
-		logger.setLevel(level);
-		logger.setUseParentHandlers(false);
-	}
-	
-	private static void deleteLog()
-	{
-		new File(LOG_PATH).delete();
-	}
-	
-	// Don't create instances of this class
-	private ControllerMain() {}
+        Args argsObj = new Args("hqd", null);
+        try {
+            argsObj.parse(args);
+        } catch (IllegalArgumentException e) {
+            showHelp();
+            System.exit(1);
+        }
+        for (Map.Entry<String, String> tmparg : argsObj) {
+            Args.ArgTuple arg = (Args.ArgTuple) tmparg;
+            if (arg.arg.equals("h")) {
+                showHelp();
+                //System.err.println("Help: ON");
+            } else if (arg.arg.equals("q")) {
+                logToConsole = true;
+                level = Level.INFO;
+                //System.err.println("Quiet: ON");
+            } else if (arg.arg.equals("d")) {
+                level = Level.ALL;
+                deleteLog();
+                //System.err.println("Debug: ON");
+            }
+        }
+        
+        if (!logToConsole) {
+            try {
+                initFileLogger(level);
+            } catch (IOException e) {
+                initConsoleLogger(level);
+            }
+        } else {
+            initConsoleLogger(level);
+        }
+        
+        logger.info("Configured Snodes. Starting program.");
+        
+        controller = GUIController.getInstance();
+        server.setConnectionManager(controller);
+        server.start();
+    }
+    
+    private static void showHelp()
+    {
+        System.err.println(
+            Controller.NAME + "\n" +
+            "-h    Print help message and exit\n" +
+            "-q    Print debugging info to console\n" +
+            "-d    Print all debug messages, and delete old log files"
+        );
+        System.exit(0);
+    }
+    
+    private static void initConsoleLogger(Level level)
+    {
+        ConsoleHandler ch = new ConsoleHandler();
+        ch.setFormatter(new ConsoleFormatter());
+        ch.setLevel(level);
+        logger.addHandler(ch);
+        logger.setLevel(level);
+        logger.setUseParentHandlers(false);
+    }
+    
+    private static void initFileLogger(Level level) throws IOException
+    {
+        FileHandler fh = new FileHandler(LOG_PATH, true); // true = append
+        ConsoleHandler ch = new ConsoleHandler();
+        fh.setFormatter(new FileFormatter());
+        ch.setFormatter(new ConsoleFormatter());
+        ch.setLevel(Level.WARNING); // Also print important messages to console
+        logger.addHandler(fh);
+        logger.addHandler(ch);
+        logger.setLevel(level);
+        logger.setUseParentHandlers(false);
+    }
+    
+    private static void deleteLog()
+    {
+        new File(LOG_PATH).delete();
+    }
+    
+    // Don't create instances of this class
+    private ControllerMain() {}
 }
