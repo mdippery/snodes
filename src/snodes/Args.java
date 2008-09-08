@@ -1,7 +1,19 @@
 /*
- * Copyright (c) 2008 Michael Dippery <mpd@cs.wm.edu>
+ * Copyright (c) 2007-2008 Michael Dippery <mpd@cs.wm.edu>
  *
- * @MIT LICENSE@
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 package snodes;
@@ -78,9 +90,8 @@ public class Args implements Iterable<Map.Entry<String, String>>
             char arg = sargs.charAt(i);
 
             if (!Character.isLetter(arg)) {
-                throw new IllegalArgumentException(sargs + ": " + arg
-                                                   + " is not a valid "
-                                                   + "argument");
+                throw new IllegalArgumentException(
+                    sargs + ": " + arg + " is not a valid argument");
             }
 
             String k = String.valueOf(arg);
@@ -175,16 +186,16 @@ public class Args implements Iterable<Map.Entry<String, String>>
                     if (cl.length == 2) {
                         w.val = cl[1].substring(1);
                     } else {
-                        throw new IllegalArgumentException(arg + " requires "
-                                                           + "a value");
+                        throw new IllegalArgumentException(
+                            arg + " requires a value");
                     }
                 } else {
                     if (!opts[idx+1].startsWith("-")) {
                         w.val = opts[idx+1];
                         newIdx++;
                     } else {
-                        throw new IllegalArgumentException(arg + " requires a "
-                                                           + "value");
+                        throw new IllegalArgumentException(
+                            arg + " requires a value");
                     }
                 }
             }
