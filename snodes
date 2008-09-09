@@ -37,8 +37,7 @@ else
 fi
 
 if [ -e $SNODES_PATH ]; then
-    java -jar $xdock $SNODES_PATH $*
-    exit $?
+    exec java -jar $xdock $SNODES_PATH $*
 else
     echo "Path not found: $SNODES_PATH"
     exit 1
