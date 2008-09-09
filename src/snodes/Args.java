@@ -66,7 +66,7 @@ public class Args implements Iterable<Map.Entry<String, String>>
         int size = 0;
         size += (shortArgs != null) ? shortArgs.length() : 0;
         size += (longArgs != null) ? longArgs.length : 0;
-        args = new HashMap<String, OptionWrapper>();
+        args = new HashMap<String, OptionWrapper>(size);
 
         processShortArgs(shortArgs);
         processLongArgs(longArgs);
