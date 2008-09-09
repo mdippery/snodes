@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Copyright (c) 2007-2008 Michael Schoonmaker <michael.r.schoonmaker@gmail.com>
-# Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
+# Copyright (c) 2007-2008 Michael Dippery <mpd@cs.wm.edu>
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -19,7 +19,7 @@
 #
 #
 # Contributors:
-#   Michael Dippery <mdippery@bucknell.edu>
+#   Michael Dippery <mpd@cs.wm.edu>
 
 
 SNODES_BASE=/usr/local
@@ -34,6 +34,15 @@ if [ -e Snodes.jar ]; then
     install -v $SNODES_SCRIPT $SNODES_BIN
     exit 0
 else
-    echo "Cannot find $SNODES_JAR. Are you sure you built Snodes?"
-    exit 1
+    echo -n "Snodes has not been built. Would you like to build it? "
+    read prompt
+    prompt=`echo $prompt | tr '[:upper:]' '[:lower:]'`
+    prompt=${prompt:0:1}
+    if [ $prompt = "y" ]; then
+        ant
+        exec ./install.sh
+    else
+        echo "Installation failed, exiting."
+        exit 1
+    fi
 fi
