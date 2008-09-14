@@ -22,6 +22,8 @@
 #   Michael Dippery <mdippery@bucknell.edu>
 
 
+getopt_jar=java-getopt-1.0.13.jar
+
 if [ `uname -s` = "Darwin" ]; then
     xdock="-Xdock:name=Snodes"
 fi
@@ -29,15 +31,18 @@ fi
 if [ "$SNODES_HOME" = "" ]; then
     if [ -e ./Snodes.jar ]; then
         SNODES_PATH=Snodes.jar
+        SNODES_CP=lib/$getopt_jar
     else
         SNODES_PATH=/usr/local/share/snodes/Snodes.jar
+        SNODES_CP=/usr/local/share/snodes/lib/$getopt_jar
     fi
 else
     SNODES_PATH=$SNODES_HOME/Snodes.jar
+    SNODES_CP=$SNODES_HOME/lib/$getopt_jar
 fi
 
 if [ -e $SNODES_PATH ]; then
-    exec java -jar $xdock $SNODES_PATH $*
+    exec java -cp $SNODES_CP -jar $xdock $SNODES_PATH $*
 else
     echo "Path not found: $SNODES_PATH"
     exit 1

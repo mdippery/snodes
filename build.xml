@@ -42,6 +42,8 @@
     
     <property name="resources.dir" value="share"/>
     
+    <property name="getopt.jar" value="java-getopt-1.0.13.jar"/>
+    
     <property name="test.unit.dir" value="test/unit-testing"/>
     <property name="test.unit.src.dir" value="${test.unit.dir}/src"/>
     <property name="test.unit.build.dir" value="${test.unit.dir}/build"/>
@@ -57,6 +59,7 @@
             destdir="${build.dir}"
             source="1.5"
             debug="${build.debug}"
+            classpath="${getopt.jar}"
         >
             <compilerarg value="-Xlint:unchecked"/>
         </javac>
@@ -84,13 +87,13 @@
             destdir="${test.unit.build.dir}"
             source="1.5"
             debug="true"
-            classpath="${build.dir}"
+            classpath="${build.dir}:${getopt.jar}"
         />
     </target>
     
     <target name="test" depends="test-build" description="Runs JUnit test cases">
         <junit haltonfailure="true" printsummary="false">
-            <classpath path="${test.unit.build.dir}:${build.dir}"/>
+            <classpath path="${test.unit.build.dir}:${build.dir}:${getopt.jar}"/>
             <formatter type="brief" usefile="false"/>
             <batchtest>
                 <fileset dir="${test.unit.build.dir}" includes="**/Test*.class"/>
@@ -104,11 +107,11 @@
             destdir="${test.fs.dir}"
             source="1.5"
             debug="true"
-            classpath="${build.dir}"
+            classpath="${build.dir}:${getopt.jar}"
         />
         <java
             classname="FSTest"
-            classpath="${test.fs.dir}:${build.dir}"
+            classpath="${test.fs.dir}:${build.dir}:${getopt.jar}"
             fork="true"
             dir="${test.fs.dir}"
         />
@@ -120,11 +123,11 @@
             destdir="${test.net.dir}"
             source="1.5"
             debug="true"
-            classpath="${build.dir}"
+            classpath="${build.dir}:${getopt.jar}"
         />
         <java
             classname="NetTest"
-            classpath="${test.net.dir}:${build.dir}"
+            classpath="${test.net.dir}:${build.dir}:${getopt.jar}"
             fork="true"
             dir="${test.net.dir}"
         />
@@ -160,6 +163,7 @@
             author="true"
             version="false"
             access="${docs.access}"
+            classpath="${getopt.jar}"
         >
             <group title="Core">
                 <package name="snodes"/>

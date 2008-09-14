@@ -25,6 +25,7 @@
 SNODES_BASE=/usr/local
 SNODES_JAR=Snodes.jar
 SNODES_SCRIPT=snodes
+SNODES_LIB=lib
 SNODES_BIN=$SNODES_BASE/bin
 SNODES_DIR=$SNODES_BASE/share/snodes
 
@@ -32,6 +33,8 @@ if [ -e Snodes.jar ]; then
     install -v -d $SNODES_DIR
     install -v -m 0644 $SNODES_JAR $SNODES_DIR
     install -v $SNODES_SCRIPT $SNODES_BIN
+    install -v -d $SNODES_DIR/lib
+    insvall -v -m 0644 $SNODES_LIB/*.jar $SNODES_DIR/lib
     exit 0
 else
     echo -n "Snodes has not been built. Would you like to build it? "
