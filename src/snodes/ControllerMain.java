@@ -123,9 +123,9 @@ public final class ControllerMain {
     {
         System.err.println(
             Controller.NAME + "\n" +
-            "-h    Print help message and exit\n" +
-            "-q    Print debugging info to console\n" +
-            "-d    Print all debug messages, and delete old log files"
+            "  -h    Print help message and exit\n" +
+            "  -q    Print debugging info to console\n" +
+            "  -d    Print all debug messages, and delete old log files"
         );
         System.exit(0);
     }
