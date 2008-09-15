@@ -24,6 +24,8 @@ import snodes.net.SnodesServer;
 import snodes.util.logging.ConsoleFormatter;
 import snodes.util.logging.FileFormatter;
 
+import gnu.getopt.Getopt;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -70,27 +72,33 @@ public final class ControllerMain {
         SnodesServer server = SnodesServer.getInstance();
         Level level = DEFAULT_LEVEL;
         boolean logToConsole = false;
-
-        Args argsObj = new Args("hqd", null);
-        try {
-            argsObj.parse(args);
-        } catch (IllegalArgumentException e) {
-            showHelp();
-            System.exit(1);
-        }
-        for (Map.Entry<String, String> tmparg : argsObj) {
-            Args.ArgTuple arg = (Args.ArgTuple) tmparg;
-            if (arg.arg.equals("h")) {
+        
+        Getopt g = new Getopt("snodes", args, "hqd");
+        int c = -1;
+        
+        while ((c = g.getopt()) != -1) {
+            switch (c) {
+            case 'h':
                 showHelp();
-                //System.err.println("Help: ON");
-            } else if (arg.arg.equals("q")) {
+                break;
+            
+            case 'q':
                 logToConsole = true;
                 level = Level.INFO;
-                //System.err.println("Quiet: ON");
-            } else if (arg.arg.equals("d")) {
+                break;
+            
+            case 'd':
                 level = Level.ALL;
                 deleteLog();
-                //System.err.println("Debug: ON");
+                break;
+            
+            case '?':
+                // Getopt already printed an error
+                break;
+            
+            default:
+                logger.warning("Getopt returned: " + c);
+                break;
             }
         }
         

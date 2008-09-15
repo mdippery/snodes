@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Copyright (c) 2007-2008 Michael Schoonmaker <michael.r.schoonmaker@gmail.com>
-# Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
+# Copyright (c) 2007-2008 Michael Dippery <mpd@cs.wm.edu>
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -19,10 +19,8 @@
 #
 #
 # Contributors:
-#   Michael Dippery <mdippery@bucknell.edu>
+#   Michael Dippery <mpd@cs.wm.edu>
 
-
-getopt_jar=java-getopt-1.0.13.jar
 
 if [ `uname -s` = "Darwin" ]; then
     xdock="-Xdock:name=Snodes"
@@ -30,20 +28,20 @@ fi
 
 if [ "$SNODES_HOME" = "" ]; then
     if [ -e ./Snodes.jar ]; then
-        SNODES_PATH=Snodes.jar
-        SNODES_CP=lib/$getopt_jar
+        snodes_path=./Snodes.jar
+        snodes_cp='-cp ./lib/java-getopt-1.0.13.jar'
     else
-        SNODES_PATH=/usr/local/share/snodes/Snodes.jar
-        SNODES_CP=/usr/local/share/snodes/lib/$getopt_jar
+        snodes_path=/usr/local/share/snodes/Snodes.jar
     fi
 else
-    SNODES_PATH=$SNODES_HOME/Snodes.jar
-    SNODES_CP=$SNODES_HOME/lib/$getopt_jar
+    snodes_path=$SNODES_HOME/Snodes.jar
 fi
 
-if [ -e $SNODES_PATH ]; then
-    exec java -cp $SNODES_CP -jar $xdock $SNODES_PATH $*
+if [ -e $snodes_path ]; then
+    java_cmd="java $snodes_cp -jar $xdock $snodes_path $*"
+#    echo $java_cmd
+    exec $java_cmd
 else
-    echo "Path not found: $SNODES_PATH"
+    echo "Path not found: $snodes_path"
     exit 1
 fi

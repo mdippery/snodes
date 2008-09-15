@@ -34,7 +34,7 @@ if [ -e Snodes.jar ]; then
     install -v -m 0644 $SNODES_JAR $SNODES_DIR
     install -v $SNODES_SCRIPT $SNODES_BIN
     install -v -d $SNODES_DIR/lib
-    insvall -v -m 0644 $SNODES_LIB/*.jar $SNODES_DIR/lib
+    install -v -m 0644 $SNODES_LIB/*.jar $SNODES_DIR/lib
     exit 0
 else
     echo -n "Snodes has not been built. Would you like to build it? "
