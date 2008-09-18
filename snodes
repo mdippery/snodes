@@ -29,7 +29,6 @@ fi
 if [ "$SNODES_HOME" = "" ]; then
     if [ -e ./Snodes.jar ]; then
         snodes_path=./Snodes.jar
-        snodes_cp='-classpath ./lib/java-getopt-1.0.13.jar'
     else
         snodes_path=/usr/local/share/snodes/Snodes.jar
     fi
@@ -38,7 +37,7 @@ else
 fi
 
 if [ -e $snodes_path ]; then
-    java_cmd="java $snodes_cp -jar $xdock $snodes_path $*"
+    java_cmd="java -jar $xdock $snodes_path $*"
 #    echo $java_cmd
     exec $java_cmd
 else
