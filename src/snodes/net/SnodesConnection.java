@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -232,7 +233,7 @@ public class SnodesConnection
 			Packet packet = new Packet(Packet.Type.CloseConnection, null);
 			sendPacket(packet);
 		} catch (IOException e) {
-			// Ignore.
+			logger.log(Level.INFO, "Cannot send disconnect packet", e);
 		} finally {
 			status = Status.NEW;
 		}
