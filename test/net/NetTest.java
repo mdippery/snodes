@@ -26,6 +26,7 @@ public final class NetTest
 		System.err.println("Running network tests...");
 		
 		SnodesServer server = SnodesServer.getInstance();
+        /*
 		ServerListener sl = new ServerListener() {
 			public void processConnection(SnodesConnection conn) {
 				System.out.println("Received new connection request: " + conn);
@@ -37,6 +38,7 @@ public final class NetTest
 			}
 		};
 		server.addListener(sl);
+        */
 		
 		server.start();
 		
