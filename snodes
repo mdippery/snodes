@@ -26,7 +26,7 @@ if [ `uname -s` = "Darwin" ]; then
     xdock="-Xdock:name=Snodes"
 fi
 
-if [ "$SNODES_HOME" = "" ]; then
+if [ -z "$SNODES_HOME" ]; then
     if [ -e ./Snodes.jar ]; then
         snodes_path=./Snodes.jar
     else
