@@ -40,7 +40,7 @@
     <property name="dist.jar" value="${project.name.short}.jar"/>
     <property name="dist.zip" value="${project.name.short}-${project.version}.zip"/>
     
-    <property name="resources.dir" value="share"/>
+    <property name="resources.dir" value="resources"/>
     
     <property name="getopt.jar" value="${lib.dir}/java-getopt-1.0.13.jar"/>
     
