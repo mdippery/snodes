@@ -69,10 +69,10 @@
         <mkdir dir="${dist.dir}"/>
         <jar destfile="${dist.dir}/${dist.jar}">
             <fileset dir="${build.dir}" includes="**/*.class"/>
+            <zipfileset src="${getopt.jar}"/>
             <fileset dir="${resources.dir}"/>
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
-                <attribute name="Class-Path" value="./${getopt.jar}"/>
             </manifest>
         </jar>
     </target>
