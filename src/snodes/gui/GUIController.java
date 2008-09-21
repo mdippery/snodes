@@ -76,6 +76,7 @@ public class GUIController extends Controller implements ActionListener {
 	// window, so enable that setting. (This is ignored on non-Mac systems).
 	static {
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Spaghetti Nodes");
 		System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
 	}
 	
