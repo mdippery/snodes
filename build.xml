@@ -26,7 +26,7 @@
 <project name="snodes" default="jar">
     <property name="project.name" value="Spaghetti Nodes"/>
     <property name="project.name.short" value="Snodes"/>
-    <property name="project.version" value="0.1alpha"/>
+    <property name="project.version" value="0.2a1"/>
     <property name="main.class" value="snodes.ControllerMain"/>
     
     <property name="build.debug" value="true"/>
