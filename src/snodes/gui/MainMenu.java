@@ -74,7 +74,7 @@ public class MainMenu extends JMenuBar {
 	    menu.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
 	    add(menu);
 
-		menu.add(createItem("My IP Address", null, "Displays your node's IP address.",
+		menu.add(createItem("Show IP Address", null, "Displays your IP address.",
 			"System.Address", KeyEvent.VK_A, KeyStroke.getKeyStroke(KeyEvent.VK_A, ACTION_MASK | ActionEvent.SHIFT_MASK)));
 		
 		// OS X adds its Quit item to the app menu automatically, so don't add if on OS X
