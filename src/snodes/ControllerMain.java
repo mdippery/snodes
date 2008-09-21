@@ -73,7 +73,7 @@ public final class ControllerMain {
         Level level = DEFAULT_LEVEL;
         boolean logToConsole = false;
         
-        Getopt g = new Getopt("snodes", args, "hqd");
+        Getopt g = new Getopt("snodes", args, "hqdV");
         int c = -1;
         
         while ((c = g.getopt()) != -1) {
@@ -90,6 +90,11 @@ public final class ControllerMain {
             case 'd':
                 level = Level.ALL;
                 deleteLog();
+                break;
+            
+            case 'V':
+                System.out.println(Controller.NAME + " " + Controller.VERSION);
+                System.exit(0);
                 break;
             
             case '?':

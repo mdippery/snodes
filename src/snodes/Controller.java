@@ -52,7 +52,9 @@ public abstract class Controller implements PacketListener, PacketFilter, Connec
 	private static final Logger logger = Logger.getLogger("snodes");
 	
 	/** The name of the program. */
-	public final static String NAME = "SpaghettiNodes Pre-Alpha";
+	public final static String NAME = "Spaghetti Nodes";
+	/** The version number of the program. */
+	public final static String VERSION = "0.2a1";
 	
 	/** The set of all current connections. */
 	// This can be a set; SnodesConnection.equals() is based on session ID
