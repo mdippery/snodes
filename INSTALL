@@ -21,7 +21,7 @@ To build Snodes.jar:
  2. Navigate to Spaghetti Nodes' base directory.
  3. At a command prompt, type ``ant``.
  4. Spaghetti Nodes has been built. The output file is ``Snodes.jar``.
- 5. Type ``./snodes`` to run Spaghetti Nodes.
+ 5. Type ``java -jar Snodes.jar`` to run Spaghetti Nodes.
 
 More information on Ant is available at
 http://ant.apache.org/manual/index.html.
