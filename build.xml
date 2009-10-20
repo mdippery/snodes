@@ -69,7 +69,7 @@
         <mkdir dir="${dist.dir}"/>
         <jar destfile="${dist.dir}/${dist.jar}">
             <fileset dir="${build.dir}" includes="**/*.class"/>
-            <zipfileset src="${getopt.jar}"/>
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
             <fileset dir="${resources.dir}"/>
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
