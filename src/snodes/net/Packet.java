@@ -99,11 +99,11 @@ public class Packet
 	 * @throws IllegalArgumentException
 	 *     If the packet is in an invalid format.
 	 */
-	Packet(byte[] bytes, int len, Key key) throws IllegalArgumentException
+	static Packet fromBytes(byte[] bytes, int len, Key key) throws IllegalArgumentException
 	{
 		byte[] data = decrypt(bytes, len, key);
 		logger.fine("Creating packet with key: " + key);
-		parse(data, len);
+		return parse(data, len);
 	}
 	
 	/**
@@ -116,10 +116,9 @@ public class Packet
 	 * @throws IllegalArgumentException
 	 *     If the packet is in an invalid format.
 	 */
-	private void parse(byte[] bytes, int len) throws IllegalArgumentException
+	private static Packet parse(byte[] bytes, int len) throws IllegalArgumentException
 	{
-		type = null;
-		info = new LinkedHashMap<String, Object>(4, 1.0F);
+		Packet packet = new Packet(null);
 		
 		logger.finest("Parsing " + len + " bytes...");
 		
@@ -129,14 +128,14 @@ public class Packet
 			String line = null;
 			
 			while ((line = in.readLine()) != null) {
-				if (type == null) { // First line, since packet type not set
+				if (packet.type == null) { // First line, since packet type not set
 					
 					int firstSpace = line.indexOf(' ');
 					if (firstSpace > -1) {
 						String typeStr = line.substring(0, line.indexOf(' '));
 						
 						try {
-							type = Type.valueOf(typeStr);
+							packet.type = Type.valueOf(typeStr);
 						} catch (IllegalArgumentException e) {
 							throw new RuntimeException(e);
 						}
@@ -147,7 +146,7 @@ public class Packet
 						// the version. This is a hack but will work for now. - mpd
 						try {
 							logger.info("Attempting to parse packet line again");
-							type = Type.valueOf(line);
+							packet.type = Type.valueOf(line);
 						} catch (IllegalArgumentException e) {
 							throw new IllegalArgumentException(line);
 						}
@@ -162,16 +161,16 @@ public class Packet
 					
 					if (value.charAt(0) == '\"') { // Strings are quoted
 						value = value.substring(1, value.length()-1);
-						info.put(prop, new String(value));
+						packet.putProperty(prop, new String(value));
 					} else { // If it's not a string, it can only be an int or a long
 						try {
 							int last = value.length()-1;
 							
 							if (value.charAt(last) == 'L') {
 								value = value.substring(0, value.length()-1);
-								info.put(prop, new Long(value));
+								packet.putProperty(prop, new Long(value));
 							} else {
-								info.put(prop, new Integer(value));
+								packet.putProperty(prop, new Integer(value));
 							}
 						} catch (NumberFormatException e) {
 							throw new RuntimeException(e);
@@ -179,6 +178,8 @@ public class Packet
 					}
 				}
 			}
+			
+			return packet;
 		} catch (UnsupportedEncodingException e) {
 			assert false : (ENCODING + " is not a valid encoding.");
 			throw new RuntimeException(e);

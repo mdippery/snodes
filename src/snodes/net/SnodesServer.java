@@ -191,7 +191,7 @@ public class SnodesServer
 		
 		SnodesConnection conn = connectionManager.getConnection(host); // null if not validated
 		if (conn != null) {
-			packet = new Packet(data, len, conn.getKey());
+			packet = Packet.fromBytes(data, len, conn.getKey());
 			processPacket(packet, host);
 		}
 	}
