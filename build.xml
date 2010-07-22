@@ -60,6 +60,7 @@
             source="1.5"
             debug="${build.debug}"
             classpath="${getopt.jar}"
+            includeAntRuntime="false"
         >
             <compilerarg value="-Xlint:unchecked"/>
         </javac>
@@ -89,6 +90,7 @@
             source="1.5"
             debug="true"
             classpath="${build.dir}:${getopt.jar}"
+            includeAntRuntime="false"
         />
     </target>
     
@@ -109,6 +111,7 @@
             source="1.5"
             debug="true"
             classpath="${build.dir}:${getopt.jar}"
+            includeAntRuntime="false"
         />
         <java
             classname="FSTest"
@@ -125,6 +128,7 @@
             source="1.5"
             debug="true"
             classpath="${build.dir}:${getopt.jar}"
+            includeAntRuntime="false"
         />
         <java
             classname="NetTest"
