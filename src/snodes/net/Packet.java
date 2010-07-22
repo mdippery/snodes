@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -74,19 +75,15 @@ public class Packet
 	private Map<String, Object> info;
 	
 	/**
-	 * Creates a new packet.
+	 * Creates a new packet with an empty set of properties.
 	 *
 	 * @param type
 	 *     The type of packet.
-	 * @param info
-	 *     A dictionary of keys and values that make up the data sent along with
-	 *     this packet. The only acceptable value types are strings or integers.
-	 *     If the packet has no data, this parameter may be <tt>null</tt>.
 	 */
-	Packet(Type type, Map<String, Object> info)
+	Packet(Type type)
 	{
 		this.type = type;
-		this.info = info;
+		this.info = null;
 	}
 	
 	/**
@@ -366,9 +363,38 @@ public class Packet
 	}
 	
 	/**
+	 * Adds an attribute to the packet.
+	 *
+	 * @param key
+	 *   The name of the attribute.
+	 * @param value
+	 *   The value of the attribute.
+	 * @return
+	 *   The previous value of <tt>key</tt>, or <tt>null</tt> if there was
+	 *   no previous value.
+	 * @throws IllegalArgumentException
+	 *   If <tt>key</tt> or <tt>value</tt> is <tt>null</tt>.
+	 */
+	public Object putProperty(String key, Object value)
+	{
+		if (key == null) {
+			throw new IllegalArgumentException("'key' may not be null");
+		}
+		if (value == null) {
+			throw new IllegalArgumentException("'value' may not be null");
+		}
+		
+		if (info == null) {
+			info = new HashMap<String,Object>();
+		}
+		
+		return info.put(key, value);
+	}
+	
+	/**
 	 * Returns the specified property from the packet.
 	 *
-	 * @param prop
+	 * @param key
 	 *     The property.
 	 * @return
 	 *     The value for the given property, or <tt>null</tt> if the given

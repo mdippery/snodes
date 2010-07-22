@@ -132,8 +132,6 @@ public class FileTransfer
 	 */
 	public void send(byte[] bytes, int seg, long size) throws IOException
 	{
-		Packet packet = null;
-		Map<String, Object> info = new HashMap<String, Object>(7);
 		String data = Base64.encodeBytes(bytes, Base64.GZIP);
 		Checksum crc = new CRC32();
 		long hash = 0; // hash is 32 bits, but it is an *unsigned* int
@@ -141,15 +139,14 @@ public class FileTransfer
 		crc.update(bytes, 0, bytes.length);
 		hash = crc.getValue();
 		
-		info.put("Id", new Integer(owner.getID()));
-		info.put("ShareName", filename);
-		info.put("TotalSize", new Long(size));
-		info.put("SegmentSize", new Integer(bytes.length));
-		info.put("Segment", new Integer(seg));
-		info.put("Hash", new Long(hash));
-		info.put("Data", data);
-		
-		packet = new Packet(Packet.Type.TransferFile, info);
+		Packet packet = new Packet(Packet.Type.TransferFile);
+		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("ShareName", filename);
+		packet.putProperty("TotalSize", new Long(size));
+		packet.putProperty("SegmentSize", new Integer(bytes.length));
+		packet.putProperty("Segment", new Integer(seg));
+		packet.putProperty("Hash", new Long(hash));
+		packet.putProperty("Data", data);
 		owner.sendPacket(packet);
 	}
 	
@@ -164,13 +161,9 @@ public class FileTransfer
 	 */
 	public void request() throws IOException
 	{
-		Packet packet = null;
-		Map<String, Object> info = new HashMap<String, Object>(2);
-		
-		info.put("Id", new Integer(owner.getID()));
-		info.put("ShareName", filename);
-		
-		packet = new Packet(Packet.Type.RequestFile, info);
+		Packet packet = new Packet(Packet.Type.RequestFile);
+		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("ShareName", filename);
 		owner.sendPacket(packet);
 	}
 	
@@ -186,14 +179,10 @@ public class FileTransfer
 	 */
 	public void request(int seg) throws IOException
 	{
-		Packet packet = null;
-		Map<String, Object> info = new HashMap<String, Object>(3);
-		
-		info.put("Id", new Integer(owner.getID()));
-		info.put("ShareName", filename);
-		info.put("Segment", new Integer(seg));
-		
-		packet = new Packet(Packet.Type.RequestAgain, info);
+		Packet packet = new Packet(Packet.Type.RequestAgain);
+		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("ShareName", filename);
+		packet.putProperty("Segment", new Integer(seg));
 		owner.sendPacket(packet);
 	}
 	
@@ -205,13 +194,9 @@ public class FileTransfer
 	 */
 	public void cancel() throws IOException
 	{
-		Packet packet = null;
-		Map<String, Object> info = new HashMap<String, Object>(2);
-		
-		info.put("Id", new Integer(owner.getID()));
-		info.put("ShareName", filename);
-		
-		packet = new Packet(Packet.Type.CancelTransfer, info);
+		Packet packet = new Packet(Packet.Type.CancelTransfer);
+		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("ShareName", filename);
 		owner.sendPacket(packet);
 	}
 	

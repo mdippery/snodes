@@ -164,12 +164,8 @@ public class SnodesConnection
 	@GuardedBy("this")
 	public synchronized void connect() throws IOException
 	{
-		Map<String, Object> info = new HashMap<String, Object>(2);
-		Packet packet = null;
-	
-		info.put("Passkey", passkey.toString());
-		
-		packet = new Packet(Packet.Type.Connect, info);
+		Packet packet = new Packet(Packet.Type.Connect);
+		packet.putProperty("Passkey", passkey.toString());
 		sendPacket(packet);
 		status = Status.CONNECTING;
 	}
@@ -213,15 +209,11 @@ public class SnodesConnection
 	{
 		if (encryptKey == null) throw new IllegalStateException("EncryptKey is null");
 		
-		Map<String, Object> info = new HashMap<String, Object>(3);
-		Packet packet = null;
 		String base64key = Base64.encodeBytes(encryptKey.toByteArray()); // Not gzipped!
-		
-		info.put("Passkey", passkey.toString());
-		info.put("Id", new Integer(id));
-		info.put("EncryptKey", base64key);
-		
-		packet = new Packet(Packet.Type.AcceptConnection, info);
+		Packet packet = new Packet(Packet.Type.AcceptConnection);
+		packet.putProperty("Passkey", passkey.toString());
+		packet.putProperty("Id", new Integer(id));
+		packet.putProperty("EncryptKey", base64key);
 		sendPacket(packet);
 	}
 	
@@ -230,7 +222,7 @@ public class SnodesConnection
 	public synchronized void disconnect()
 	{
 		try {
-			Packet packet = new Packet(Packet.Type.CloseConnection, null);
+			Packet packet = new Packet(Packet.Type.CloseConnection);
 			sendPacket(packet);
 		} catch (IOException e) {
 			logger.log(Level.INFO, "Cannot send disconnect packet", e);
