@@ -35,6 +35,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -58,6 +60,8 @@ import java.util.Set;
  * @version 0.1
  */
 public class RootShares {
+	private static final Logger logger = Logger.getLogger("snodes.fs");
+	
 	/** The single shared instance of the class. */
 	private static RootShares singleton = null;
 	
@@ -172,7 +176,7 @@ public class RootShares {
 					}
 				}
 			}
-			System.err.println("Couldn't find " + alias +" in shares");
+			logger.warning("Couldn't find '" + alias + "' in shares");
 			return false;
 		}
 	}
@@ -242,9 +246,9 @@ public class RootShares {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			System.err.println("Could not open cache file: " + e.getMessage());
+			logger.log(Level.WARNING, "Could not open cache file", e);
 		} catch (IOException e) {
-			System.err.println("Error reading cache file: " + e.getMessage());
+			logger.log(Level.WARNING, "Error reading cache file", e);
 		}
 	}
 	
@@ -268,7 +272,7 @@ public class RootShares {
 					}
 				}
 			} catch (IOException e) {
-				System.err.println("Error writing cache file: " + e.getMessage());
+				logger.log(Level.WARNING, "Error writing cache file", e);
 			} finally {
 				if (out != null) {
 					try {

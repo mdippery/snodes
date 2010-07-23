@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 
 /**
@@ -45,6 +46,8 @@ import java.util.Iterator;
  */
 @ThreadSafe
 public class FileRead {
+	private static final Logger logger = Logger.getLogger("snodes.fs");
+	
 	/** The default size of a file segment. */
 	public static final int DEFAULT_SEGMENT_SIZE = 131072;  // 128k
 	/** The maximum segment size, in bytes. */
@@ -110,7 +113,7 @@ public class FileRead {
 	/** Closes any files in the file map. */
 	private void closeFiles()
 	{
-		System.err.println("Closing random access files...");
+		logger.finer("Closing random access files...");
 		
 		Iterator<File> iter = fileMap.keySet().iterator();
 		while (iter.hasNext()) {
@@ -121,12 +124,12 @@ public class FileRead {
 			} catch (IOException e) {
 				// Ignore.
 			} finally {
-				System.err.println("Closed random access file: " + key);
+				logger.fine("Closed random access file: " + key);
 				fileMap.remove(key);
 			}
 		}
 		
-		System.err.println("Random access files closed.");
+		logger.finer("Random access files closed.");
 	}
 	
 	/**
@@ -149,7 +152,7 @@ public class FileRead {
 				} catch (IOException e) {
 					// Ignore.
 				} finally {
-					System.err.println("Closed random access file: " + keyFile);
+					logger.fine("Closed random access file: " + keyFile);
 					fileMap.remove(keyFile);
 				}
 			}
@@ -268,7 +271,7 @@ public class FileRead {
 			if (size > MAX_SEGMENT_SIZE) {
 				maxSegmentSize = size;
 			} else {
-				System.err.println("segment size cannot be set to " + size);
+				logger.warning("segment size cannot be set to " + size);
 			}
 			return maxSegmentSize;
 		}
@@ -300,7 +303,7 @@ public class FileRead {
 		for(final String part : pathParts){
 			if(path.equals("")){
 				path = rootsMap.get(part);
-				if(path==null){
+				if (path == null){
 					throw new FileNotFoundException("Cannot find '"+part+"' in the shares.");
 				}
 			} else {

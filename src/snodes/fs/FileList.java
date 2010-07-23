@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 
 /**
@@ -37,6 +38,8 @@ import java.util.Set;
  * @version 0.1
  */
 public class FileList {
+	private static final Logger logger = Logger.getLogger("snodes.fs");
+	
 	private GenericTree<File> root;
 	private File shareName;
 	private Object treeLock;
@@ -60,7 +63,7 @@ public class FileList {
 	 */
 	public void createTree(Map<String,String> shares) {
 		if (shares == null) {
-			System.err.println("Cannot create tree: shares is null");
+			logger.warning("Cannot create tree: shares is null");
 		}
 		
 		// Read in file structures
@@ -81,10 +84,10 @@ public class FileList {
 	 */
 	private void createShare(String alias, String path) {
 		File shareRoot = new File(path);
-		if(shareRoot.isDirectory()){
+		if (shareRoot.isDirectory()){
 			addChildren(root,shareRoot);
-		}else{
-			System.err.println("Error: " + path + " is not a valid folder to share");
+		} else {
+			logger.warning("'" + path + "' is not a valid folder to share");
 		}
 	}
 	
@@ -102,7 +105,6 @@ public class FileList {
 				synchronized (treeLock) {
 					node.insert(tempTreeNode);
 				}
-				//System.out.println(rootAlias + dir.toString().substring(pathTrim) + " added to tree");
 				return;
 			} else if(file.isDirectory()) {
 				// recurse entire directory
@@ -120,7 +122,7 @@ public class FileList {
 				assert false : (file + " is neither a file nor a directory");
 			}
 		} else {
-			System.err.println("Error: Unable to add " + file + " to the tree");
+			logger.warning("Unable to add '" + file + "' to the tree");
 		}
 	}
 	
