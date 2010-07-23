@@ -26,8 +26,6 @@ package snodes.net;
 import snodes.util.Base64;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.zip.Checksum;
 import java.util.zip.CRC32;
 

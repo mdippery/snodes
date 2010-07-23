@@ -37,7 +37,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -438,7 +437,7 @@ public class Packet
 		/** Cancels a file transfer. */
 		CancelTransfer,
 		/** A simple chat packet. */
-		//TODO - implement chat after nodes are proplerly connected.
+		//TODO - implement chat after nodes are properly connected.
 		ChatMessage
 	}
 }
