@@ -371,8 +371,7 @@ public class Packet
 	 * @param value
 	 *   The value of the attribute.
 	 * @return
-	 *   The previous value of <tt>key</tt>, or <tt>null</tt> if there was
-	 *   no previous value.
+	 *   The packet.
 	 * @throws IllegalArgumentException
 	 *   If <tt>key</tt> or <tt>value</tt> is <tt>null</tt>.
 	 */
@@ -389,7 +388,8 @@ public class Packet
 			info = new HashMap<String,Object>();
 		}
 		
-		return info.put(key, value);
+		info.put(key, value);
+		return this;
 	}
 	
 	/**
