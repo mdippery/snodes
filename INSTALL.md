@@ -2,7 +2,7 @@ Getting the Source
 ==================
 
 The Snodes source code is available from a Git repository. If you don't have
-Git, you can download it from http://git.or.cz/.
+Git, you can download it from [git.or.cz/][git].
 
 The "authoritative" Snodes repo is maintained by Michael Dippery, and is
 read-only. To clone a copy of the repo:
@@ -13,7 +13,7 @@ Building
 ========
 
 Spaghetti Nodes is a Java application that uses Apache Ant to build its JAR
-file. Apache Ant is available from http://ant.apache.org/.
+file. Apache Ant is available from [ant.apache.org/][ant].
 
 To build Snodes.jar:
 
@@ -23,4 +23,8 @@ To build Snodes.jar:
 4. Spaghetti Nodes has been built. The output file is `Snodes.jar`.
 5. Type `java -jar Snodes.jar` to run Spaghetti Nodes.
 
-More information on Ant is available at http://ant.apache.org/manual/.
+More information on Ant is available at [ant.apache.org/manual/][ant-manual].
+
+[git]:        http://git.or.cz/
+[ant]:        http://ant.apache.org/
+[ant-manual]: http://ant.apache.org/manual/
