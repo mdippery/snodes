@@ -5,23 +5,18 @@
  * Author: Michael Dippery <mdippery@bucknell.edu>
  */
 
-package snodes.fs.test;
-
-import snodes.fs.PathManager;
-
-import junit.framework.TestCase;
+package snodes.fs;
 
 import java.io.File;
 
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-public class TestPathManager extends TestCase
+
+public class TestPathManager
 {
-	public TestPathManager(String name)
-	{
-		super(name);
-	}
-	
 	// Tests PathUtils.getDataDirectory to make sure it always returns the same name
+	@Test
 	public void testDataDirectory()
 	{
 		File path1 = PathManager.getManager().getDataDirectory();
@@ -30,6 +25,6 @@ public class TestPathManager extends TestCase
 		assertNotNull("path1 is null", path1);
 		assertNotNull("path2 is null", path2);
 		assertEquals("paths are not equal", path1, path2);
-		System.out.println("Data directory is " + path1);
+		//System.out.println("Data directory is " + path1);
 	}
 }

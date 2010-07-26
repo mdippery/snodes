@@ -52,6 +52,11 @@
     
     <property name="test.net.dir" value="test/net"/>
     
+    <path id="cp.junit">
+      <pathelement location="${ant.home}/lib/junit.jar"/>
+      <pathelement location="${ant.home}/lib/hamcrest.jar"/>
+    </path>
+    
     <target name="build" description="Compiles the Java source code into bytecode">
         <mkdir dir="${build.dir}"/>
         <javac
@@ -89,14 +94,24 @@
             destdir="${test.unit.build.dir}"
             source="1.5"
             debug="true"
-            classpath="${build.dir}:${getopt.jar}"
             includeAntRuntime="false"
-        />
+        >
+            <classpath refid="cp.junit"/>
+            <classpath>
+                <pathelement location="${build.dir}"/>
+                <pathelement location="${getopt.jar}"/>
+            </classpath>
+        </javac>
     </target>
     
     <target name="test" depends="test-build" description="Runs JUnit test cases">
         <junit haltonfailure="true" printsummary="false">
-            <classpath path="${test.unit.build.dir}:${build.dir}:${getopt.jar}"/>
+            <classpath refid="cp.junit"/>
+            <classpath>
+                <pathelement location="${test.unit.build.dir}"/>
+                <pathelement location="${build.dir}"/>
+                <pathelement location="${getopt.jar}"/>
+            </classpath>
             <formatter type="brief" usefile="false"/>
             <batchtest>
                 <fileset dir="${test.unit.build.dir}" includes="**/Test*.class"/>

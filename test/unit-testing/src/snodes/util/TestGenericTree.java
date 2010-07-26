@@ -5,24 +5,22 @@
  * Author: Michael Dippery <mdippery@bucknell.edu>
  */
 
-package snodes.util.test;
-
-import snodes.util.GenericTree;
-
-import junit.framework.TestCase;
+package snodes.util;
 
 import java.util.Iterator;
 
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-public class TestGenericTree extends TestCase
+
+public class TestGenericTree
 {
 	private GenericTree<String> tree;
 	
-	public TestGenericTree(String name)
+	@Before
+	public void initTree()
 	{
-		super(name);
-		
-		// Initialize the tree instance variable
 		GenericTree<String> tree0 = new GenericTree<String>("Child 0");
 		GenericTree<String> tree1 = new GenericTree<String>("Child 1");
 		GenericTree<String> tree00 = new GenericTree<String>("Child 00");
@@ -34,15 +32,16 @@ public class TestGenericTree extends TestCase
 	}
 	
 	// Tests getting children
+	@Test
 	public void testGetChildren()
 	{
 		Iterator<GenericTree<String>> iter = tree.getChildren();
 		boolean gotChildren = false;
 		
-		System.out.println(tree);
+		//System.out.println(tree);
 		while (iter.hasNext()) {
 			GenericTree<String> subtree = iter.next();
-			System.out.println(subtree);
+			//System.out.println(subtree);
 			gotChildren = true;
 		}
 		
@@ -50,6 +49,7 @@ public class TestGenericTree extends TestCase
 	}
 	
 	// Tests getting a specific child
+	@Test
 	public void testGetChildAt()
 	{
 		GenericTree<String> child1 = tree.getChildAt(1);
@@ -57,12 +57,14 @@ public class TestGenericTree extends TestCase
 	}
 	
 	// Tests counting children
+	@Test
 	public void testChildCount()
 	{
 		assertTrue("childCount != 2", tree.getChildCount() == 2);
 	}
 	
 	// Tests returning the index of a tree
+	@Test
 	public void testIndexOf()
 	{
 		GenericTree<String> child1 = new GenericTree<String>("Child 1");
@@ -72,21 +74,24 @@ public class TestGenericTree extends TestCase
 	}
 	
 	// Tests getting the object
+	@Test
 	public void testGetObject()
 	{
 		assertTrue(tree.getObject().equals("Root"));
 	}
 	
 	// Tests setting an object
+	@Test
 	public void testSetObject()
 	{
 		GenericTree<String> root = new GenericTree<String>("root");
-		System.out.println(root);
+		//System.out.println(root);
 		root.setObject("not root");
 		assertTrue("object not changed", root.getObject().equals("not root"));
 	}
 	
 	// Test inserting a tree
+	@Test
 	public void testInsert()
 	{
 		GenericTree<String> inserted = new GenericTree<String>("inserted");
@@ -98,6 +103,7 @@ public class TestGenericTree extends TestCase
 	}
 	
 	// Test leafs
+	@Test
 	public void testIsLeaf()
 	{
 		GenericTree<String> leaf = new GenericTree<String>("Leaf");
@@ -107,6 +113,7 @@ public class TestGenericTree extends TestCase
 	}
 	
 	// Test has child
+	@Test
 	public void testHasChild()
 	{
 		GenericTree<String> child = new GenericTree<String>("Child");
