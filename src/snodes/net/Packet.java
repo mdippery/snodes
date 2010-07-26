@@ -400,10 +400,10 @@ public class Packet
 	 *     The value for the given property, or <tt>null</tt> if the given
 	 *     property is not defined.
 	 */
-	public Object getProperty(String prop)
+	public Object getProperty(String key)
 	{
 		if (info != null) {
-			return info.get(prop);
+			return info.get(key);
 		} else {
 			return null;
 		}

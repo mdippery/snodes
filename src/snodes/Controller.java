@@ -159,7 +159,6 @@ public abstract class Controller implements PacketListener, PacketFilter, Connec
 							conn.authorize(sessionID, newkey);
 							conn.accept();
 							logger.finer("Added connection (" + sessionID + "): " + conn);
-
 							logger.info("Accepted connection: " + conn);
 						} catch (IOException ex) {
 							logger.log(Level.SEVERE, null, ex);
@@ -281,6 +280,7 @@ public abstract class Controller implements PacketListener, PacketFilter, Connec
 	
 	/**
 	 * Validates the given host.
+	 *
 	 * @param host
 	 *     The address to validate.
 	 */
@@ -302,7 +302,11 @@ public abstract class Controller implements PacketListener, PacketFilter, Connec
 	}
 
 	/**
-	 * Composed method for validateHost, getConnection.
+	 * Composed method for {@link #validateHost}, {@link #getConnection}.
+	 *
+	 * @param address
+	 *     The IP address or hostname of the connection to
+	 *     be added.
 	 */
 	public SnodesConnection addConnection(String address) {
 		try {
