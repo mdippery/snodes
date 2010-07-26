@@ -21,28 +21,28 @@
 package snodes.gui;
 
 import snodes.Controller;
-import snodes.command.Command;
+import snodes.fs.RootShares;
+import snodes.net.Packet;
 import snodes.net.Packet.Type;
 import snodes.net.SnodesConnection;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import java.util.prefs.BackingStoreException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.UIManager;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.ImageIcon;
-import javax.swing.JTabbedPane;
 import javax.swing.JSplitPane;
-import snodes.net.Packet;
+import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
 
 
 /**
@@ -52,7 +52,7 @@ import snodes.net.Packet;
  * @author <a href="mailto:mdippery@bucknell.edu">Michael Dippery</a>
  * @version 0.1
  */
-public class GUIController extends Controller implements ActionListener {
+public class GUIController extends Controller {
 	
 	/** The class logger. */
 	private static final Logger logger = Logger.getLogger("snodes.gui");
@@ -92,19 +92,13 @@ public class GUIController extends Controller implements ActionListener {
 		return singleton;
 	}
 
-	/**
-	 * Throws a CloneNotSupportedException, seeing as this is a singleton class.
-	 *
-	 */
-        @Override
+	/** Throws a CloneNotSupportedException, seeing as this is a singleton class. */
+	@Override
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException("GUIController is a singleton class. Clone not supported.");
 	}
 	
-	/** 
-	 * Creates a new GUI controller. This sets up the default interface. 
-	 *
-	 */
+	/** Creates a new GUI controller. This sets up the default interface. */
 	private GUIController() {
 		super();
 		
@@ -121,7 +115,7 @@ public class GUIController extends Controller implements ActionListener {
 		frame = new JFrame(Controller.NAME);
 		// Setup default close operation - save window preferences.
 		frame.addWindowListener(new WindowAdapter() {
-                        @Override
+			@Override
 			public void windowClosing(WindowEvent event) {
 				savePrefsAndExit();
 			}
@@ -129,9 +123,9 @@ public class GUIController extends Controller implements ActionListener {
 
 		//Perform the actual layout.
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		connectionsPanel = new ConnectionsPanel(this);
+		connectionsPanel = new ConnectionsPanel();
 		tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-		output = new IOPanel(this);
+		output = new IOPanel();
 		addTab("Text Output", null, output, "The text output");
 
 		splitPane.setOneTouchExpandable(true);
@@ -145,7 +139,7 @@ public class GUIController extends Controller implements ActionListener {
 		frame.pack();
 		frame.setLocation(prefs.getInt("XLocation", 20), prefs.getInt("YLocation", 20));
 		frame.setExtendedState(prefs.getInt("WindowState", 0));
-		frame.setJMenuBar(new MainMenu(this));
+		frame.setJMenuBar(new MainMenu());
 		frame.setVisible(true);
 		
 		// Register a hook to save the window position when quit via the app menu.
@@ -320,33 +314,60 @@ public class GUIController extends Controller implements ActionListener {
 		return JOptionPane.showInputDialog(frame, title, label, JOptionPane.PLAIN_MESSAGE, null, pickFrom, null);
 	}
 	
-	/**
-	 * Handles any commands sent via the ActionListener / ActionEvent interface.
-	 *
-	 */
-	public void actionPerformed(ActionEvent event) {
-		try {
-			String actionCommand = event.getActionCommand();
-			int index = actionCommand.indexOf('.');
-			index = actionCommand.indexOf('.', index + 1);
-			if(index != -1)
-				actionCommand = actionCommand.substring(0, index);
-			Class command = Class.forName("snodes.command." + actionCommand);
-			((Command)command.newInstance()).run(event.getActionCommand());
-		} catch(ClassNotFoundException e) {
+	void promptForNewConnection()
+	{
+		String address = showTextDialog("Enter the user's IP Address:", "IP Address");
+		String passkey = showTextDialog("Enter the secret:", "Secret");
+		
+		if (address != null && passkey != null) { // Did the user cancel the dialog?
+			SnodesConnection conn = GUIController.getInstance().addConnection(address);
+			
+			conn.authenticate(passkey);
+			logger.finest("Connection.Add creating connection: " + conn);
+			connect(conn);
+			refreshAll();
+		}
+	}
+	
+	void promptToDeleteConnection()
+	{
+		SnodesConnection[] conns = GUIController.getInstance().getConnections();
+		SnodesConnection conn = (SnodesConnection) showSelectionDialog(
+			"Select the connection to remove",
+			"Remove Connection",
+			conns
+		);
+		invalidateHost(conn.getHost());
+	}
+	
+	void promptToAddShare()
+	{
+		String alias = showTextDialog("Enter the alias for the share:", "Alias");
+		if (alias != null && !"".equals(alias)) {
+			String path = showTextDialog("Enter the path:", "Path");
 			try {
-				if (event.getSource().getClass() == Class.forName("snodes.gui.OutputPanel")) {
-					println("Command not understood: " + event.getActionCommand());
-				} else {
-					logger.warning("Command not understood: " + event.getActionCommand());
+				if (path != "" && path != null) {
+					RootShares.getInstance().addFolder(alias, path);
 				}
-			} catch(ClassNotFoundException e2) {
-				assert false : "Class not found";
+			} catch(IllegalArgumentException e) {
+				logger.log(Level.SEVERE, "IllegalArgumentException", e);
 			}
-		} catch(InstantiationException e) {
-			logger.log(Level.SEVERE, "InstantiationException", e);
-		} catch(IllegalAccessException e) {
-			logger.log(Level.SEVERE, "IllegalAccessException", e);
+		}
+	}
+	
+	void promptToRemoveShare()
+	{
+		if (RootShares.getInstance().getFolderList().isEmpty()) {
+			showMessageDialog("No shares to remove", "Remove Share");
+			return;
+		}
+		String alias = showSelectionDialog(
+			"Select the share to remove",
+			"Remove Share",
+			RootShares.getInstance().getFolderList().keySet().toArray()
+		).toString();
+		if (alias != null && !"".equals(alias)) {
+			RootShares.getInstance().removeFolder(alias);
 		}
 	}
 	
@@ -357,8 +378,8 @@ public class GUIController extends Controller implements ActionListener {
 
 	@Override
 	public void processPacket(SnodesConnection conn, Packet packet) {
-		this.println("Received: " + packet.toString() + "From " + conn.toString());
+		println("Received: " + packet.toString() + "From " + conn.toString());
 		super.processPacket(conn, packet);
-		this.refreshAll();
+		refreshAll();
 	}
 }

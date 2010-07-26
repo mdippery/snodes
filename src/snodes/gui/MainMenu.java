@@ -27,6 +27,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -47,14 +50,12 @@ import javax.swing.KeyStroke;
  * @version 0.1
  */
 public class MainMenu extends JMenuBar {
-	
 	/** The class logger. */
 	private static final Logger logger = Logger.getLogger("snodes.gui");
 	
 	/** The mask for action-related keystrokes. */
 	private static int ACTION_MASK = ActionEvent.CTRL_MASK;
-	/** The global listener used by the menu structure. */
-	private static ActionListener listener;
+
 	// On Mac OS X, this key should be the command key, not the option key
 	static {
 		if (System.getProperty("os.name").startsWith("Mac OS")) {
@@ -63,19 +64,29 @@ public class MainMenu extends JMenuBar {
 	}
 	
 	/** Creates the main menu for the SpaghettiNodes program. */
-	public MainMenu(ActionListener listener) {
+	public MainMenu() {
 		super();
-		
-		this.listener = listener;
 		
 	    //This is where the menu will be built.
 	    JMenu menu = new JMenu("Menu");
 	    menu.setMnemonic(KeyEvent.VK_M);
 	    menu.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
 	    add(menu);
-
-		menu.add(createItem("Show IP Address", null, "Displays your IP address.",
-			"System.Address", KeyEvent.VK_A, KeyStroke.getKeyStroke(KeyEvent.VK_A, ACTION_MASK | ActionEvent.SHIFT_MASK)));
+	
+		JMenuItem showIPItem = new JMenuItem("Show IP Address");
+		showIPItem.setMnemonic(KeyEvent.VK_A);
+		showIPItem.getAccessibleContext().setAccessibleDescription("Displays your IP address");
+		showIPItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ACTION_MASK | ActionEvent.SHIFT_MASK));
+		showIPItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					GUIController.getInstance().println("Your IP address is " + InetAddress.getLocalHost().getHostAddress());
+				} catch (UnknownHostException exc) {
+					logger.log(Level.WARNING, "Could not get host", exc);
+				}
+			}
+		});
+		menu.add(showIPItem);
 		
 		// OS X adds its Quit item to the app menu automatically, so don't add if on OS X
 		if (!"Mac OS X".equals(System.getProperty("os.name"))) {
@@ -88,46 +99,20 @@ public class MainMenu extends JMenuBar {
 			try {
 				icon = new ImageIcon(Bundle.getMainBundle().loadImage("skull.png"));
 			} catch (FileNotFoundException e) {
-				logger.warning("Cannot load Quit image: " + e.getMessage());
+				logger.log(Level.WARNING, "Cannot load Quit image", e);
 			} finally {
-				menu.add(createItem("Quit", icon, label, command, mnemonic, key));
+				//menu.add(createItem("Quit", icon, label, command, mnemonic, key));
+				JMenuItem quitItem = new JMenuItem("Quit", icon);
+				quitItem.setMnemonic(mnemonic);
+				quitItem.setAccelerator(key);
+				quitItem.getAccessibleContext().setAccessibleDescription(label);
+				quitItem.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						GUIController.getInstance().savePrefsAndExit();
+					}
+				});
+				menu.add(quitItem);
 			}
 		}
-	}
-	
-	/**
-	 * Creates a new JMenuItem with the given parameters.
-	 *
-	 * @param name
-	 *	The name of the menu item.
-	 * @param icon
-	 *	The icon to be used alongside the name.
-	 * @param description
-	 *	The tooltip description of the menu control.
-	 * @param command
-	 *	The actual command passed to the ActionListener.
-	 * @param monic
-	 *	The mnemonic used to access the item once the Menu has focus.
-	 * @param accel
-	 *	The hotkey Accelerator used to access the item from outside the Menu.
-	 *
-	 * @return
-	 *	The created JMenuItem.
-	 */
-	private JMenuItem createItem(String name, Icon icon, String description, String command, int monic, KeyStroke accel) {
-		JMenuItem menuItem = new JMenuItem(name, icon);
-		menuItem.setMnemonic(monic);
-	    menuItem.getAccessibleContext().setAccessibleDescription(description);
-	    if(listener != null) {
-		    menuItem.addActionListener(listener);
-		    if(command != null)
-		    	menuItem.setActionCommand(command);
-		    else
-		    	menuItem.setActionCommand(name);
-	    }
-	    if(accel != null) {
-		    menuItem.setAccelerator(accel);
-	    }
-	    return menuItem;
 	}
 }

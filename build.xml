@@ -145,12 +145,6 @@
             destdir="${docs.dir}"
             packagenames="
                 snodes,
-                snodes.command,
-                snodes.command.Connection,
-                snodes.command.Search,
-                snodes.command.Shares,
-                snodes.command.System,
-                snodes.command.Transfer,
                 snodes.crypto,
                 snodes.fs,
                 snodes.gui,
@@ -179,12 +173,6 @@
                 <package name="snodes.util.logging"/>
             </group>
             <group title="User Interface">
-                <package name="snodes.command"/>
-                <package name="snodes.command.Connection"/>
-                <package name="snodes.command.Search"/>
-                <package name="snodes.command.Shares"/>
-                <package name="snodes.command.System"/>
-                <package name="snodes.command.Transfer"/>
                 <package name="snodes.gui"/>
             </group>
             <group title="Encryption">

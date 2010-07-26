@@ -19,42 +19,48 @@
 
 package snodes.gui;
 
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import snodes.fs.RootShares;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 
 /**
  * A text output panel for the Spaghetti Nodes program.
  *
  * @author Michael Schoonmaker
+ * @author Michael Dippery
  * @version 0.1
  */
-public class IOPanel extends JPanel implements ActionListener {
+public class IOPanel extends JPanel {
+	private static final Logger logger = Logger.getLogger("snodes.gui");
+	
 	/** The main text area. */
 	private JTextArea output;
 	/** The text entry field. */
 	private JTextField entryField;
 	/** The text entry button. */
 	private JButton entrySubmit;
-	/** The ActionListener to send commands to. */
-	private ActionListener listener;
 	
 	/** Creates a new main panel. */
-	public IOPanel(ActionListener listener) {
+	public IOPanel() {
 		super(new BorderLayout());
-		
-		this.listener = listener;
 		
 		//Create the text area used for output.	 Request
 		//enough space for 5 rows and 30 columns.
@@ -62,11 +68,14 @@ public class IOPanel extends JPanel implements ActionListener {
 		output.setEditable(false);
 		
 		entryField = new JTextField(60);
-		entryField.addActionListener(this);
 
 		entrySubmit = new JButton();
 		entrySubmit.setText("Submit");
-		entrySubmit.addActionListener(this);
+		entrySubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				handleCommand(entryField.getText());
+			}
+		});
 
 		JPanel entryPanel = new JPanel(new BorderLayout());
 		entryPanel.add(entryField, BorderLayout.CENTER);
@@ -98,15 +107,41 @@ public class IOPanel extends JPanel implements ActionListener {
 		output.setCaretPosition(output.getDocument().getLength());
 	}
 	
-	/**
-	 * Handles input from the entry field.
-	 *
-	 */
-	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == entryField || event.getSource() == entrySubmit) {
-			ActionEvent newEvent = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, entryField.getText());
-			listener.actionPerformed(newEvent);
-			entryField.setText("");
+	public void handleCommand(String command)
+	{
+		GUIController gui = GUIController.getInstance();
+		if (command.equals("Connection.Add")) {
+			gui.promptForNewConnection();
+		} else if (command.equals("Connection.Manage")) {
+			gui.println("Connection management not implemented yet");
+		} else if (command.equals("Connection.Remove")) {
+			gui.promptToDeleteConnection();
+		} else if (command.equals("Search.Private")) {
+			gui.println("Searching not implemented yet");
+		} else if (command.equals("Search.Public")) {
+			gui.println("Searching not implemented yet");
+		} else if (command.equals("Shares.Add")) {
+			gui.promptToAddShare();
+		} else if (command.equals("Shares.Manage")) {
+			gui.println("Shares management not implemented yet");
+		} else if (command.equals("Shares.Print")) {
+			gui.println(RootShares.getInstance().toString());
+		} else if (command.equals("Shares.Remove")) {
+			gui.promptToRemoveShare();
+		} else if (command.equals("System.Address")) {
+			try {
+				gui.println("Your IP address is " + InetAddress.getLocalHost().getHostAddress());
+			} catch (UnknownHostException exc) {
+				logger.log(Level.WARNING, "Could not get host", exc);
+			}
+		} else if (command.equals("System.Help")) {
+			gui.println("RTFM");
+		} else if (command.equals("System.Quit")) {
+			gui.savePrefsAndExit();
+		} else if (command.equals("System.RefreshUI")) {
+			gui.refreshAll();
+		} else {
+			gui.println("Invalid command: " + command);
 		}
-	}	
+	}
 }

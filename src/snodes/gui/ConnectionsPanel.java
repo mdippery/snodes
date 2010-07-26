@@ -23,6 +23,7 @@ package snodes.gui;
 import snodes.net.SnodesConnection;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
@@ -46,22 +47,21 @@ public class ConnectionsPanel extends JPanel {
 	
 	/** The panel containing all of the current connections. */
 	private JPanel connections;
-	/** The shared ActionListener. */
-	private ActionListener listener;
 	
 	/** Creates a new connections panel. */
-	public ConnectionsPanel(ActionListener listener) {
+	public ConnectionsPanel() {
 		super(new BorderLayout());
-
-		this.listener = listener;
 
 		connections = new JPanel();
 		connections.setLayout(new BoxLayout(connections, BoxLayout.Y_AXIS));
 		
 		JButton newConnectionButton = new JButton();
 		newConnectionButton.setText("Add Connection");
-		newConnectionButton.setActionCommand("Connection.Add");
-		newConnectionButton.addActionListener(listener);
+		newConnectionButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIController.getInstance().promptForNewConnection();
+			}
+		});
 		
 		add(connections, BorderLayout.PAGE_START);
 		add(newConnectionButton, BorderLayout.PAGE_END);
@@ -77,8 +77,13 @@ public class ConnectionsPanel extends JPanel {
 		for (final SnodesConnection conn : GUIController.getInstance().getConnections()) {
 			logger.finest("Adding connection button: " + conn.getHost());
 			JButton addition = new JButton(conn.getHost().getHostAddress());
-			addition.setActionCommand("Connection.Manage." + conn.getHost().getHostAddress());
-			addition.addActionListener(listener);
+			//addition.setActionCommand("Connection.Manage." + conn.getHost().getHostAddress());
+			//addition.addActionListener(listener);
+			addition.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					logger.warning("Managing connections is not implemented yet!");
+				}
+			});
 			connections.add(addition);
 		}
 	}
