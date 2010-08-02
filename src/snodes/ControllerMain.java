@@ -81,26 +81,22 @@ public final class ControllerMain {
             case 'h':
                 showHelp();
                 break;
-            
             case 'q':
                 logToConsole = true;
                 level = Level.INFO;
                 break;
-            
             case 'd':
+                logToConsole = true;
                 level = Level.ALL;
-                deleteLog();
+                //deleteLog();
                 break;
-            
             case 'V':
                 System.out.println(Controller.NAME + " " + Controller.VERSION);
                 System.exit(0);
                 break;
-            
             case '?':
                 // Getopt already printed an error
                 break;
-            
             default:
                 logger.warning("Getopt returned: " + c);
                 break;
