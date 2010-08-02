@@ -458,6 +458,7 @@ public class SnodesConnection
 		if (packet == null) return;
 		
 		logger.fine("Attempting to send packet " + packet.getType() + "...");
+		logger.finest("Packet is:\n" + packet);
 		
 		DatagramSocket socket = new DatagramSocket();
 		DatagramPacket dgram = null;

@@ -348,7 +348,7 @@ public class Packet
 			}
 		}
 		
-		return new String(buf);
+		return new String(buf).trim();
 	}
 	
 	/**
