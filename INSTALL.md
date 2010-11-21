@@ -17,7 +17,7 @@ file. Apache Ant is available from [ant.apache.org/][ant].
 
 To build Snodes.jar:
 
-1. Download and install Apache Ant from http://ant.apache.org/.
+1. Download and install Apache Ant from [ant.apache.org/][ant].
 2. Navigate to Spaghetti Nodes' base directory.
 3. At a command prompt, type `ant`.
 4. Spaghetti Nodes has been built. The output file is `Snodes.jar`.
