@@ -91,12 +91,7 @@ public class SnodesServer
 		};
 		
 		thread = new Thread(runner, "Server Thread");
-		thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-			public void uncaughtException(Thread t, Throwable e) {
-				String msg = t.getName() + " crashed";
-				logger.log(Level.SEVERE, msg, e);
-			}
-		});
+		thread.setUncaughtExceptionHandler(new DefaultExceptionHandler());
 		thread.setDaemon(true); // Quit when Java VM exits
 	}
 	
@@ -155,12 +150,7 @@ public class SnodesServer
 						}
 					};
 					Thread parser = new Thread(parseRunner, "Packet Parser Thread");
-					parser.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-						public void uncaughtException(Thread t, Throwable e) {
-							String msg = t.getName() + " crashed";
-							logger.log(Level.SEVERE, msg, e);
-						}
-					});
+					parser.setUncaughtExceptionHandler(new DefaultExceptionHandler());
 					
 					parser.start();
 				} catch (IOException e) {
@@ -226,5 +216,16 @@ public class SnodesServer
 	public void setConnectionManager(ConnectionManager manager)
 	{
 		connectionManager = manager;
+	}
+	
+	
+	/** Default exception handler for uncaught exceptions. */
+	private static class DefaultExceptionHandler implements Thread.UncaughtExceptionHandler
+	{
+		public void uncaughtException(Thread t, Throwable e)
+		{
+			String msg = t.getName() + " crashed";
+			logger.log(Level.SEVERE, msg, e);
+		}
 	}
 }
