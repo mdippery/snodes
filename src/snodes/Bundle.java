@@ -21,14 +21,15 @@
 package snodes;
 
 import java.io.FileNotFoundException;
-import java.net.URL;
-import java.util.List;
-import java.util.ArrayList;
 import java.io.File;
-import java.util.Enumeration;
-import java.net.URLDecoder;
-import java.io.UnsupportedEncodingException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
 
 /**
  * Provides a way to interact with resources in JAR files.
