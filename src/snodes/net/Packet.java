@@ -374,7 +374,7 @@ public class Packet
 	 * @throws IllegalArgumentException
 	 *   If <tt>key</tt> or <tt>value</tt> is <tt>null</tt>.
 	 */
-	public Object putProperty(String key, Object value)
+	public Packet putProperty(String key, Object value)
 	{
 		if (key == null) {
 			throw new IllegalArgumentException("'key' may not be null");
