@@ -290,12 +290,12 @@ public class SnodesConnection
 	 * Packet listeners are often used to be notified of file transfers, too:<p>
 	 *
 	 * <pre>
-	 * PacketListener pfl = new PacketListener() {
+	 * PacketListener pl = new PacketListener() {
 	 *     public void processPacket(SnodesConnection conn, Packet packet) {
 	 *         System.err.println("Received file from " + conn.getHost());
 	 *     }
 	 * };
-	 * PacketFilter pff = new PacketFiler() {
+	 * PacketFilter pf = new PacketFilter() {
 	 *     public boolean accept(Packet.Type type) {
 	 *         if (type == Packet.Type.TransferFile) {
 	 *             return true;
