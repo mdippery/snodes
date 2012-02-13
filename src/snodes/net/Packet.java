@@ -131,7 +131,7 @@ public class Packet
 					
 					int firstSpace = line.indexOf(' ');
 					if (firstSpace > -1) {
-						String typeStr = line.substring(0, line.indexOf(' '));
+						String typeStr = line.substring(0, firstSpace);
 						
 						try {
 							packet.type = Type.valueOf(typeStr);
@@ -166,7 +166,7 @@ public class Packet
 							int last = value.length()-1;
 							
 							if (value.charAt(last) == 'L') {
-								value = value.substring(0, value.length()-1);
+								value = value.substring(0, last);
 								packet.putProperty(prop, new Long(value));
 							} else {
 								packet.putProperty(prop, new Integer(value));
