@@ -203,20 +203,18 @@ public class Packet
 	 */
 	byte[] toByteArray(Key key) throws IllegalArgumentException
 	{
+		if (key == null) throw new IllegalArgumentException("null key");
+		
 		try {
-			if (key != null) {
-				byte[] raw = toString().getBytes(ENCODING);
-				byte[] encrypted = null;
-				
-				encrypted = encrypt(raw, key);
-				
-				if (encrypted.length <= SnodesServer.UDP_MAX) {
-					return encrypted;
-				} else {
-					throw new RuntimeException("Packet length " + encrypted.length);
-				}
+			byte[] raw = toString().getBytes(ENCODING);
+			byte[] encrypted = null;
+			
+			encrypted = encrypt(raw, key);
+			
+			if (encrypted.length <= SnodesServer.UDP_MAX) {
+				return encrypted;
 			} else {
-				throw new IllegalArgumentException("null key");
+				throw new RuntimeException("Packet length " + encrypted.length);
 			}
 		} catch (UnsupportedEncodingException e) {
 			assert false : (ENCODING + " is not a valid encoding.");
