@@ -53,8 +53,8 @@
     <property name="test.net.dir" value="test/net"/>
     
     <path id="cp.junit">
-      <pathelement location="${ant.home}/lib/junit.jar"/>
-      <pathelement location="${ant.home}/lib/hamcrest.jar"/>
+      <pathelement location="${lib.dir}/junit.jar"/>
+      <pathelement location="${lib.dir}/hamcrest.jar"/>
     </path>
     
     <target name="build" description="Compiles the Java source code into bytecode">
@@ -75,7 +75,7 @@
         <mkdir dir="${dist.dir}"/>
         <jar destfile="${dist.dir}/${dist.jar}">
             <fileset dir="${build.dir}" includes="**/*.class"/>
-            <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar" excludes="junit.jar hamcrest.jar"/>
             <fileset dir="${resources.dir}"/>
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
