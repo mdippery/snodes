@@ -1,4 +1,3 @@
-/* -*-    indent-tabs-mode:t; tab-width:4; c-basic-offset:4    -*- */
 /*
  * Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
  *
