@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2007-2008 Michael Schoonmaker <michael.r.schoonmaker@gmail.com>
  * Copyright (c) 2007-2008 Chris Shake <cshake@gmail.com>
- * Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
+ * Copyright (c) 2007-2008 Michael Dippery <michael@monkey-robot.com>
  * Copyright (c) 2007-2008 Chris Kenna <ckenna@bucknell.edu>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -54,7 +54,7 @@ import java.util.logging.Logger;
  * or the possibility for deadlock arrises!
  *
  * @author Chris Shake
- * @author <a href="mailto:mdippery@bucknell.edu">Michael Dippery</a>
+ * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @author Christopher Kenna
  * @version 0.1
  */

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2008 Michael Schoonmaker <michael.r.schoonmaker@gmail.com>
- * Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
+ * Copyright (c) 2007-2008 Michael Dippery <michael@monkey-robot.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -28,7 +28,7 @@ import java.util.logging.LogRecord;
 /**
  * Formats log messages for entry into a log file.
  *
- * @author <a href="mailto:mdippery@bucknell.edu">Michael Dippery</a>
+ * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @version 0.1
  */
 public class FileFormatter extends Formatter

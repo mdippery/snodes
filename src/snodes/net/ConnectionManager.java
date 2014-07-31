@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
+ * Copyright (c) 2007-2008 Michael Dippery <michael@monkey-robot.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -30,7 +30,7 @@ import java.net.InetAddress;
  * map of connections to hosts, which allows classes (such as {@link SnodesServer})
  * to query the manager for connection information.
  *
- * @author <a href="mailto:mdippery@bucknell.edu">Michael Dippery</a>
+ * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @author Michael Schoonmaker
  * @version 0.1
  */

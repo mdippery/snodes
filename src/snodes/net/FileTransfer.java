@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
+ * Copyright (c) 2007-2008 Michael Dippery <michael@monkey-robot.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -69,7 +69,7 @@ import java.util.zip.CRC32;
  * <tt>FileTransfer</tt> objects to its listeners, so the listeners (or delegates
  * of the listeners) must perform this task.
  *
- * @author <a href="mailto:mdippery@bucknell.edu">Michael Dippery</a>
+ * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @version 0.1
  * @see SnodesConnection#createTransfer
  * @see FileTransfer#send

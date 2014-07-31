@@ -1,6 +1,6 @@
 /*
  * NetTest.java - Network code testing
- * Michael Dippery <mdippery@bucknell.edu>
+ * Michael Dippery <michael@monkey-robot.com>
  * 2008-01-20
  */
 

@@ -1,7 +1,7 @@
 /*
  * TestPathUtils
  * Spaghetti Nodes Unit Testing
- * Author: Michael Dippery <mdippery@bucknell.edu>
+ * Author: Michael Dippery <michael@monkey-robot.com>
  */
 
 package snodes.fs;

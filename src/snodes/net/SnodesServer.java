@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2008 Michael Dippery <mdippery@bucknell.edu>
+ * Copyright (c) 2007-2008 Michael Dippery <michael@monkey-robot.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -52,7 +52,7 @@ import java.util.logging.Logger;
  * The server runs in its own thread, and will be shut down automatically when
  * the Java VM exits. There is no way to manually stop or restart the server.
  *
- * @author <a href="mailto:mdippery@bucknell.edu">Michael Dippery</a>
+ * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @version 0.1
  */
 public class SnodesServer
