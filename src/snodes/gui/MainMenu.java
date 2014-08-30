@@ -22,10 +22,21 @@ package snodes.gui;
 import snodes.Bundle;
 import snodes.Controller;
 
+import org.xbill.DNS.DClass;
+import org.xbill.DNS.Message;
+import org.xbill.DNS.Name;
+import org.xbill.DNS.Record;
+import org.xbill.DNS.Resolver;
+import org.xbill.DNS.Section;
+import org.xbill.DNS.SimpleResolver;
+import org.xbill.DNS.TextParseException;
+import org.xbill.DNS.Type;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -93,7 +104,24 @@ public class MainMenu extends JMenuBar {
 		showExternalIPItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ACTION_MASK | ActionEvent.SHIFT_MASK));
 		showExternalIPItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIController.getInstance().println("Your external IP address is ");
+				try {
+					Name name = new Name("myip.opendns.com.");
+					Resolver res = new SimpleResolver("resolver1.opendns.com");
+					Record rec = Record.newRecord(name, Type.A, DClass.IN);
+					Message query = Message.newQuery(rec);
+					Message resp = res.send(query);
+					logger.log(Level.FINEST, "DNS response: " + resp);
+					String[] parts = resp.sectionToString(Section.ANSWER).split("\t");
+					assert parts.length == 5 : "DNS response has " + parts.length + " parts, not 5";
+					String externalIP = parts[4];
+					GUIController.getInstance().println("Your external IP address is " + externalIP);
+				} catch (TextParseException exc) {
+					logger.log(Level.WARNING, "Could not parse text", exc);
+				} catch (UnknownHostException exc) {
+					logger.log(Level.WARNING, "Could not get host", exc);
+				} catch (IOException exc) {
+					logger.log(Level.WARNING, "Error making DNS query", exc);
+				}
 			}
 		});
 		menu.add(showExternalIPItem);
