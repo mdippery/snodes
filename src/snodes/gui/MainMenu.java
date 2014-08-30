@@ -86,6 +86,17 @@ public class MainMenu extends JMenuBar {
 			}
 		});
 		menu.add(showIPItem);
+
+		JMenuItem showExternalIPItem = new JMenuItem("Show External IP Address");
+		showExternalIPItem.setMnemonic(KeyEvent.VK_P);
+		showExternalIPItem.getAccessibleContext().setAccessibleDescription("Displays your external IP address");
+		showExternalIPItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ACTION_MASK | ActionEvent.SHIFT_MASK));
+		showExternalIPItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIController.getInstance().println("Your external IP address is ");
+			}
+		});
+		menu.add(showExternalIPItem);
 		
 		// OS X adds its Quit item to the app menu automatically, so don't add if on OS X
 		if (!"Mac OS X".equals(System.getProperty("os.name"))) {
