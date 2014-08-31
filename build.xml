@@ -52,6 +52,11 @@
     <property name="test.fs.dir" value="test/fs"/>
     
     <property name="test.net.dir" value="test/net"/>
+
+    <path id="cp.runtime">
+        <pathelement location="${lib.dir}/dnsjava-2.1.6.jar"/>
+        <pathelement location="${lib.dir}/java-getopt-1.0.13.jar"/>
+    </path>
     
     <path id="cp.junit">
       <pathelement location="${lib.dir}/junit.jar"/>
@@ -65,7 +70,7 @@
             destdir="${build.dir}"
             source="1.5"
             debug="${build.debug}"
-            classpath="${getopt.jar}:${dns.jar}"
+            classpathref="cp.runtime"
             includeAntRuntime="false"
         >
             <compilerarg value="-Xlint:unchecked"/>
@@ -98,9 +103,9 @@
             includeAntRuntime="false"
         >
             <classpath refid="cp.junit"/>
+            <classpath refid="cp.runtime"/>
             <classpath>
                 <pathelement location="${build.dir}"/>
-                <pathelement location="${getopt.jar}"/>
             </classpath>
         </javac>
     </target>
@@ -108,10 +113,10 @@
     <target name="test" depends="test-build" description="Runs JUnit test cases">
         <junit haltonfailure="true" printsummary="false">
             <classpath refid="cp.junit"/>
+            <classpath refid="cp.runtime"/>
             <classpath>
                 <pathelement location="${test.unit.build.dir}"/>
                 <pathelement location="${build.dir}"/>
-                <pathelement location="${getopt.jar}"/>
             </classpath>
             <formatter type="brief" usefile="false"/>
             <batchtest>
@@ -178,7 +183,7 @@
             author="true"
             version="false"
             access="${docs.access}"
-            classpath="${getopt.jar}"
+            classpathref="cp.runtime"
         >
             <group title="Core">
                 <package name="snodes"/>
