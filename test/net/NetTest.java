@@ -26,19 +26,6 @@ public final class NetTest
         System.err.println("Running network tests...");
         
         SnodesServer server = SnodesServer.getInstance();
-        /*
-        ServerListener sl = new ServerListener() {
-            public void processConnection(SnodesConnection conn) {
-                System.out.println("Received new connection request: " + conn);
-                try {
-                    authorize(conn);
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
-        };
-        server.addListener(sl);
-        */
         
         server.start();
         
@@ -81,7 +68,6 @@ public final class NetTest
         }
         
         conn.addListener(pl, pf);
-        //conn.setID(4);
         conn.authenticate("mypasskey");
         conn.authorize(1, key);
     }
