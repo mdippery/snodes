@@ -187,7 +187,6 @@ public class SnodesConnection
 		
 		this.id = id;
 		this.encryptKey = new EncryptionKey(key);
-		//this.status = Status.AUTHORIZED;
 	}
 	
 	/**
