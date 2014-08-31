@@ -42,9 +42,6 @@
     
     <property name="resources.dir" value="resources"/>
     
-    <property name="dns.jar" value="${lib.dir}/dnsjava-2.1.6.jar"/>
-    <property name="getopt.jar" value="${lib.dir}/java-getopt-1.0.13.jar"/>
-    
     <property name="test.unit.dir" value="test/unit-testing"/>
     <property name="test.unit.src.dir" value="${test.unit.dir}/src"/>
     <property name="test.unit.build.dir" value="${test.unit.dir}/build"/>
