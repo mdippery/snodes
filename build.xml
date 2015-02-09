@@ -65,7 +65,6 @@
         <javac
             srcdir="${src.dir}"
             destdir="${build.dir}"
-            source="1.5"
             debug="${build.debug}"
             classpathref="cp.runtime"
             includeAntRuntime="false"
@@ -95,7 +94,6 @@
         <javac
             srcdir="${test.unit.src.dir}"
             destdir="${test.unit.build.dir}"
-            source="1.5"
             debug="true"
             includeAntRuntime="false"
         >
@@ -126,7 +124,6 @@
         <javac
             srcdir="${test.fs.dir}"
             destdir="${test.fs.dir}"
-            source="1.5"
             debug="true"
             classpath="${build.dir}:${getopt.jar}"
             includeAntRuntime="false"
@@ -143,7 +140,6 @@
         <javac
             srcdir="${test.net.dir}"
             destdir="${test.net.dir}"
-            source="1.5"
             debug="true"
             classpath="${build.dir}:${getopt.jar}"
             includeAntRuntime="false"
@@ -176,7 +172,6 @@
                 org.bouncycastle.crypto.paddings"
             overview="${src.dir}/overview.html"
             windowtitle="${project.name} ${project.version}"
-            source="1.5"
             author="true"
             version="false"
             access="${docs.access}"
