@@ -53,11 +53,7 @@ public final class NetTest
         };
         PacketFilter ftf = new PacketFilter() {
             public boolean accept(Packet.Type type) {
-                if (type == Packet.Type.TransferFile) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return type == Packet.Type.TransferFile;
             }
         };
         local.addListener(ftl, ftf);
