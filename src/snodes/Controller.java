@@ -131,48 +131,48 @@ public abstract class Controller implements PacketListener, PacketFilter, Connec
 				} catch (IOException e) {
 					logger.log(Level.SEVERE, "Cannot establish connection", e);
 				}
+				break;
+			}
+			case AcceptConnection:
+			{
+				logger.finer("Searching for attempt: " + conn + "...");
+				if (connectionMap.get(conn.getHost()) != null) {
+					logger.finer("Found attempt: " + conn);
 
-				} break;
-				case AcceptConnection:
-				{
-					logger.finer("Searching for attempt: " + conn + "...");
-					if (connectionMap.get(conn.getHost()) != null) {
-						logger.finer("Found attempt: " + conn);
+					Integer sessionIDObj = null;
+					int sessionID = -1;
+					byte[] encryptKey = new byte[32];
 
-						Integer sessionIDObj = null;
-						int sessionID = -1;
-						byte[] encryptKey = new byte[32];
+					connectionMap.remove(conn.getHost());
+					logger.finer("Removed attempt: " + conn);
 
-						connectionMap.remove(conn.getHost());
-						logger.finer("Removed attempt: " + conn);
+					new Random().nextBytes(encryptKey);
 
-						new Random().nextBytes(encryptKey);
-
-						try {
-							sessionIDObj = (Integer) packet.getProperty("Id");
-							assert sessionIDObj != null : "Packet Id is null";
-							sessionID = sessionIDObj.intValue();
-							
-							String base64key = (String) packet.getProperty("EncryptKey");
-							byte[] newkey = Base64.decode(base64key);
-							conn.authorize(sessionID, newkey);
-							conn.accept();
-							logger.finer("Added connection (" + sessionID + "): " + conn);
-							logger.info("Accepted connection: " + conn);
-						} catch (IOException ex) {
-							logger.log(Level.SEVERE, null, ex);
-						} catch (IllegalStateException ex) {
-							logger.log(Level.SEVERE, null, ex);
-						} catch (ClassCastException e) {
-							logger.log(Level.SEVERE, "Cannot get session ID", e);
-						}
-					} else {
-						logger.severe("No attempted connection: " + conn);
+					try {
+						sessionIDObj = (Integer) packet.getProperty("Id");
+						assert sessionIDObj != null : "Packet Id is null";
+						sessionID = sessionIDObj.intValue();
+						
+						String base64key = (String) packet.getProperty("EncryptKey");
+						byte[] newkey = Base64.decode(base64key);
+						conn.authorize(sessionID, newkey);
+						conn.accept();
+						logger.finer("Added connection (" + sessionID + "): " + conn);
+						logger.info("Accepted connection: " + conn);
+					} catch (IOException ex) {
+						logger.log(Level.SEVERE, null, ex);
+					} catch (IllegalStateException ex) {
+						logger.log(Level.SEVERE, null, ex);
+					} catch (ClassCastException e) {
+						logger.log(Level.SEVERE, "Cannot get session ID", e);
 					}
+				} else {
+					logger.severe("No attempted connection: " + conn);
 				}
 				break;
 			}
 		}
+	}
 	
 	/**
 	 * Returns <tt>true</tt> if the listener should accept the specified packet
