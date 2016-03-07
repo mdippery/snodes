@@ -20,6 +20,7 @@
 package snodes.crypto;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 
 /**
@@ -58,13 +59,7 @@ public class Passkey implements Key
 	{
 		try {
 			byte[] oldKey = key.getBytes("UTF-8");
-			byte[] newKey = new byte[32];
-			
-			for (int i = 0; i < 32; i++) {
-				newKey[i] = oldKey[i % oldKey.length];
-			}
-			
-			return newKey;
+			return Arrays.copyOf(oldKey, 32);
 		} catch (UnsupportedEncodingException e) {
 			assert false : "UTF-8 is not a valid encoding.";
 			throw new RuntimeException(e);
