@@ -114,7 +114,7 @@ public class MainMenu extends JMenuBar {
 					String[] parts = resp.sectionToString(Section.ANSWER).split("\t");
 					assert parts.length == 5 : "DNS response has " + parts.length + " parts, not 5";
 					String externalIP = parts[4];
-					GUIController.getInstance().println("Your external IP address is " + externalIP);
+					GUIController.getInstance().println("Your external IP address is " + externalIP.trim());
 				} catch (TextParseException exc) {
 					logger.log(Level.WARNING, "Could not parse text", exc);
 				} catch (UnknownHostException exc) {
