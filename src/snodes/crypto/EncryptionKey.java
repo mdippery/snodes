@@ -52,7 +52,7 @@ public class EncryptionKey implements Key
 	 */
 	public byte[] toByteArray()
 	{
-		return key;
+		return Arrays.copyOf(key, key.length);
 	}
 	
 	/**
