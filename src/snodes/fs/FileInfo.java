@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2007-2008 Michael Schoonmaker <michael.r.schoonmaker@gmail.com>
  * Copyright (c) 2007-2008 Chris Shake <cshake@gmail.com>
+ * Copyright (c) 2016      Michael Dippery <michael@monkey-robot.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -18,6 +19,8 @@
  */
 
 package snodes.fs;
+
+import java.util.Arrays;
 
 /**
  * Keeps all the info needed about incoming files.
@@ -52,7 +55,7 @@ public class FileInfo {
 	}
 	
 	public boolean[] segmentStatusArray(){
-		return segmentStatus;
+		return Arrays.copyOf(segmentStatus, segmentStatus.length);
 	}
 	
 	public void segmentWritten(int segnum){
