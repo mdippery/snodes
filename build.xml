@@ -51,8 +51,8 @@
     <property name="test.net.dir" value="test/net"/>
 
     <path id="cp.runtime">
-        <pathelement location="${lib.dir}/dnsjava-2.1.6.jar"/>
-        <pathelement location="${lib.dir}/java-getopt-1.0.13.jar"/>
+        <pathelement location="${lib.dir}/dnsjava-2.1.7.jar"/>
+        <pathelement location="${lib.dir}/java-getopt-1.0.14.jar"/>
     </path>
     
     <path id="cp.junit">
