@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2008 Michael Schoonmaker <michael.r.schoonmaker@gmail.com>
- * Copyright (c) 2007-2008 Michael Dippery <michael@monkey-robot.com>
+ * Copyright (c) 2007-2016 Michael Dippery <michael@monkey-robot.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -56,13 +56,13 @@ public class ConsoleFormatter extends Formatter
 	public String format(LogRecord record)
 	{
 		Throwable t = record.getThrown();
-		String level = String.format("[%-7s]", record.getLevel().toString());
+		String level = String.format("%7s", record.getLevel().toString().toLowerCase());
 		String msg = record.getMessage();
-		
+
 		if (t != null) {
-			return String.format("%s %s: %s%n", level, msg, t.toString());
+			return String.format("! %s: %s%n%n%s%n%n", level, msg, t.toString());
 		} else {
-			return String.format("%s %s%n", level, msg);
+			return String.format("! %s: %s%n", level, msg);
 		}
 	}
 }
