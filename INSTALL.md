@@ -2,7 +2,7 @@ Getting the Source
 ==================
 
 The Snodes source code is available from a Git repository. If you don't have
-Git, you can download it from [git.or.cz/][git].
+Git, you can download it from [git-scm.com][git].
 
 The "authoritative" Snodes repo is maintained by Michael Dippery, and is
 read-only. To clone a copy of the repo:
@@ -25,6 +25,6 @@ To build Snodes.jar:
 
 More information on Ant is available at [ant.apache.org/manual/][ant-manual].
 
-[git]:        http://git.or.cz/
+[git]:        https://git-scm.com/
 [ant]:        http://ant.apache.org/
 [ant-manual]: http://ant.apache.org/manual/
