@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+enablePlugins(PackPlugin)
+
 lazy val root = (project in file("."))
   .settings(
     name         := "snodes",
@@ -23,5 +25,7 @@ lazy val root = (project in file("."))
     version      := "0.2-SNAPSHOT",
 
     crossPaths       := false,
-    autoScalaLibrary := false
+    autoScalaLibrary := false,
+
+    packMain := Map("snodes" -> "snodes.ControllerMain")
   )
