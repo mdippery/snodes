@@ -38,18 +38,18 @@ import java.util.List;
  */
 public class Bundle
 {
-	/** The class loader for this bundle. */
-	private ClassLoader loader;
+	/** The class for this bundle. */
+	private Class<? extends Bundle> cls;
 	
 	/**
 	 * Creates a new instance of <tt>Bundle</tt>.
 	 *
 	 * @param loader
-	 *     The bundle's (or program's) class loader.
+	 *     The bundle's (or program's) class.
 	 */
-	private Bundle(ClassLoader loader)
+	private Bundle(Class<? extends Bundle> cls)
 	{
-		this.loader = loader;
+		this.cls = cls;
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class Bundle
 	 */
 	public static Bundle getMainBundle()
 	{
-		return new Bundle(ClassLoader.getSystemClassLoader());
+		return new Bundle(Bundle.class);
 	}
 	
 	/**
@@ -76,7 +76,7 @@ public class Bundle
 	 */
 	public URL loadImage(String image) throws FileNotFoundException
 	{
-		URL imageURL = loader.getResource("resources/images/" + image);
+		URL imageURL = cls.getResource("/resources/images/" + image);
 		if (imageURL != null) {
 			return imageURL;
 		} else {
