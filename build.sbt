@@ -20,5 +20,8 @@ lazy val root = (project in file("."))
   .settings(
     name         := "snodes",
     organization := "com.mipadi",
-    version      := "0.2-SNAPSHOT"
+    version      := "0.2-SNAPSHOT",
+
+    crossPaths       := false,
+    autoScalaLibrary := false
   )
