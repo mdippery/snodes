@@ -4,7 +4,7 @@
  * 2008-01-20
  */
 
-import snodes.net.*;
+package snodes.net;
 
 import java.net.InetAddress;
 
