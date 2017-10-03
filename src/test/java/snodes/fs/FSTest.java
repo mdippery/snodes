@@ -5,7 +5,7 @@
 //  Created by Christopher Shake on 10/26/07.
 //
 
-import snodes.fs.*;
+package snodes.fs;
 
 import java.io.*;
 import java.nio.*;
