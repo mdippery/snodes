@@ -27,5 +27,9 @@ lazy val root = (project in file("."))
     crossPaths       := false,
     autoScalaLibrary := false,
 
+    libraryDependencies ++= Seq(
+      "junit" % "junit" % "4.12" % Test
+    ),
+
     packMain := Map("snodes" -> "snodes.ControllerMain")
   )
