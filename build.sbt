@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-enablePlugins(PackPlugin)
+enablePlugins(JavaAppPackaging)
 
 lazy val root = (project in file("."))
   .settings(
@@ -31,7 +31,5 @@ lazy val root = (project in file("."))
       "dnsjava" % "dnsjava" % "2.1.8",
       "gnu.getopt" % "java-getopt" % "1.0.13",
       "junit" % "junit" % "4.12" % Test
-    ),
-
-    packMain := Map("snodes" -> "snodes.ControllerMain")
+    )
   )
