@@ -12,19 +12,14 @@ read-only. To clone a copy of the repo:
 Building
 ========
 
-Spaghetti Nodes is a Java application that uses Apache Ant to build its JAR
-file. Apache Ant is available from [ant.apache.org/][ant].
+Spaghetti Nodes is a Java application that uses **sbt** to build its JAR
+file. sbt is available from [scala-sbt.org][sbt].
 
 To build Snodes.jar:
 
-1. Download and install Apache Ant from [ant.apache.org/][ant].
+1. Download and install sbt from [scala-sbt.org][sbt].
 2. Navigate to Spaghetti Nodes' base directory.
-3. At a command prompt, type `ant`.
-4. Spaghetti Nodes has been built. The output file is `Snodes.jar`.
-5. Type `java -jar Snodes.jar` to run Spaghetti Nodes.
-
-More information on Ant is available at [ant.apache.org/manual/][ant-manual].
+3. Type `sbt run` to build and run Spaghetti Nodes.
 
 [git]:        https://git-scm.com/
-[ant]:        http://ant.apache.org/
-[ant-manual]: http://ant.apache.org/manual/
+[sbt]:        https://www.scala-sbt.org/
