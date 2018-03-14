@@ -76,7 +76,7 @@ public class Bundle
 	 */
 	public URL loadImage(String image) throws FileNotFoundException
 	{
-		URL imageURL = cls.getResource("/resources/images/" + image);
+		URL imageURL = cls.getResource("/images/" + image);
 		if (imageURL != null) {
 			return imageURL;
 		} else {
