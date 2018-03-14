@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -80,7 +81,17 @@ public class Bundle
 		if (imageURL != null) {
 			return imageURL;
 		} else {
-			throw new FileNotFoundException(image);
+			return loadImageInConsole(image);
+		}
+	}
+
+	private URL loadImageInConsole(String image) throws FileNotFoundException
+	{
+		String path = Bundle.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "images/" + image;
+		try {
+			return new File(path).toURI().toURL();
+		} catch (MalformedURLException ex) {
+			throw new FileNotFoundException(path);
 		}
 	}
 }
