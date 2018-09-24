@@ -77,7 +77,7 @@ public class FileFormatter extends Formatter
 		}
 		
 		str = String.format(
-			"%1$tF %1$tT [%2$-7s]: %3$s%n",
+			"%1$tF %1$tT | %2$-7s : %3$s%n",
 			new Date(), record.getLevel().toString(), record.getMessage()
 		);
 		if (tStr != null) {
