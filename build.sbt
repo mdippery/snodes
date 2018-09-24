@@ -32,6 +32,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "dnsjava" % "dnsjava" % "2.1.8",
       "gnu.getopt" % "java-getopt" % "1.0.13",
+      "org.zeromq" % "jeromq" % "0.4.3",
       "junit" % "junit" % "4.12" % Test,
       "com.novocode" % "junit-interface" % "0.11" % Test
     )
