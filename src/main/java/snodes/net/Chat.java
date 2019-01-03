@@ -58,7 +58,7 @@ public class Chat
 	public void sendMessage(String msg) throws IOException
 	{
 		Packet packet = new Packet(Packet.Type.ChatMessage);
-		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("Id", Integer.valueOf(owner.getID()));
 		packet.putProperty("Message", msg);
 		owner.sendPacket(packet);
 	}
