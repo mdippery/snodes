@@ -27,7 +27,7 @@ lazy val root = (project in file("."))
     crossPaths       := false,
     autoScalaLibrary := false,
 
-    javacOptions += "-Xlint:deprecation",
+    // javacOptions += "-Xlint:deprecation",
 
     libraryDependencies ++= Seq(
       "dnsjava" % "dnsjava" % "2.1.8",
