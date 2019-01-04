@@ -25,9 +25,9 @@ package snodes.net;
 
 /**
  * Allows packet listeners to select which packet types they'd like to
- * receive.<p>
+ * receive.
  *
- * For example, to create a packet filter that accepts all packets:<p>
+ * <p>For example, to create a packet filter that accepts all packets:</p>
  *
  * <pre>
  * PacketFilter pf = new PacketFilter() {
@@ -43,11 +43,13 @@ package snodes.net;
 public interface PacketFilter
 {
 	/**
-	 * Returns <tt>true</tt> if the listener should accept the specified packet
+	 * Returns true if the listener should accept the specified packet
 	 * type.
 	 *
+	 * @param type
+	 *    Packet type
 	 * @return
-	 *     <tt>true</tt> if the packet should be accepted.
+	 *     true if the packet should be accepted.
 	 */
 	boolean accept(Packet.Type type);
 }

@@ -41,13 +41,13 @@ public class FileFormatter extends Formatter
 	
 	/**
 	 * Formats a message for logging purposes. The message "Debug message",
-	 * with the level INFO, would look like the following:<p>
+	 * with the level INFO, would look like the following:
 	 *
 	 * <pre>
 	 * 2008-01-18 12:26:59.051 Snodes [INFO]: Debug message
 	 * </pre>
 	 *
-	 * Stack trace information is also prevented in the case of an exception.
+	 * <p>Stack trace information is also prevented in the case of an exception.</p>
 	 *
 	 * @param record
 	 *     The log record.

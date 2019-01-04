@@ -45,7 +45,7 @@ public class FileList {
 	private Map<String,String> sharedDirs;
 	
 	/**
-	 * Creates a new instance of <tt>FileList</tt>.
+	 * Creates a new instance of FileList.
 	 *
 	 * @param name The root of the shared file list.
 	 */
@@ -157,7 +157,7 @@ public class FileList {
 	 * string representation of the file listing.
 	 *
 	 * @param node The current node.
-	 * @param buf The <tt>StringBuffer</tt> to which the string is written.
+	 * @param buf The StringBuffer to which the string is written.
 	 * @param lvl The current indentation level.
 	 * @param alias The base share alias for hte current branches
 	 * @param path The path to the base of the share for current branches

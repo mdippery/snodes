@@ -29,10 +29,10 @@ import java.awt.Toolkit;
  * A set of utilities for interacting with the standard directory structure
  * in a platform-independent way. This class provides a number of static
  * methods to finding standard paths to application data directories, temporary
- * file storage locations, and preference files.<p>
+ * file storage locations, and preference files.
  *
- * <tt>PathManager</tt> is a singleton class; use {@link #getManager} to get
- * instances of this class.
+ * <p>PathManager is a singleton class; use {@link #getManager} to get
+ * instances of this class.</p>
  *
  * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @author Michael Schoonmaker
@@ -65,9 +65,9 @@ public final class PathManager
 	
 	/**
 	 * Returns a file reference representing a path to a directory in which
-	 * application data, such as cache files, can be stored.<p>
+	 * application data, such as cache files, can be stored.
 	 *
-	 * The returned file object can be prepended to a data file, like so:<p>
+	 * <p>The returned file object can be prepended to a data file, like so:</p>
 	 *
 	 * <pre>
 	 * File dataDir = PathUtils.getDataDirectory();

@@ -50,11 +50,11 @@ public class FileWrite {
 	private Map<File,FileInfo> currentHandles;
 	
 	/**
-	 * Creates new instance of <tt>FileWrite</tt>.
+	 * Creates new instance of FileWrite.
 	 *
-	 * This constructor is private and cannot be called outside of the class.
+	 * <p>This constructor is private and cannot be called outside of the class.
 	 * Other classes should use {@link #getInstance} to get instances of this
-	 * class instead.
+	 * class instead.</p>
 	 */
 	private FileWrite() {
 		// Get save directory from some utility
@@ -66,7 +66,7 @@ public class FileWrite {
 	 * Returns the shared instance of this class.
 	 *
 	 * @return
-	 *     An instance of <tt>FileWrite</tt>.
+	 *     An instance of FileWrite.
 	 */
 	@GuardedBy("this")
 	public static synchronized FileWrite getInstance()
@@ -96,11 +96,14 @@ public class FileWrite {
 	}
 	
 	/**
-	 * Returns next segment needed
-	 * If file is done, it will return -1 to indicate none are needed.
+	 * Returns next segment needed.
+     *
+     * <p>If file is done, it will return -1 to indicate none are needed.</p>
 	 *
 	 * @param fileName
 	 *		incoming file name
+     * @return
+     *      Next segment ID, or -1 if no more segments are available.
 	 */
 	public int nextSegmentNeeded(String fileName){
 		File save = new File(saveDir, fileName);
@@ -126,6 +129,8 @@ public class FileWrite {
 	 *
 	 * @param fileName
 	 *		incoming file name
+	 * @return
+	 *      true if the file has been fully written to disk.
 	 */
 	public boolean isFileDone(String fileName){
 		File save = new File(saveDir, fileName);
@@ -171,14 +176,14 @@ public class FileWrite {
 	}
 	
 	/**
-	 * Creates a clone of this instance. Clones of <tt>FileWrite</tt> cannot
+	 * Creates a clone of this instance. Clones of FileWrite cannot
 	 * be created, so this method <em>always</em> throws an exception. To get
 	 * instances of this class, use {@link #getInstance}.
 	 *
 	 * @return A copy of this instance.
 	 * @throws CloneNotSupportedException If cloning is not supported. This
 	 *	   class does not support cloning, so this method always throws a
-	 *	   <tt>CloneNotSupportedException</tt>.
+	 *	   CloneNotSupportedException.
 	 */
 	protected Object clone() throws CloneNotSupportedException
 	{

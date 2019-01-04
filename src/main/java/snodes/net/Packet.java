@@ -42,16 +42,16 @@ import java.util.logging.Logger;
 
 /**
  * A wrapper for a stream of data sent between two nodes. The data contained
- * within a <tt>Packet</tt> object is a high-level representation of the
- * datagrams sent between two nodes.<p>
+ * within a Packet object is a high-level representation of the
+ * datagrams sent between two nodes.
  *
- * The general design of <tt>Packet</tt> is as a container for a dictionary of
+ * <p>The general design of Packet is as a container for a dictionary of
  * packet data. The packet retains info on the source or destination of the
  * packet and the type of packet, and also wraps a dictionary of the actual
  * data for the packet. The exact structure of the dictionary differs depending
- * upon the packet type.<p>
+ * upon the packet type.</p>
  *
- * This class is loosely modeled after the Cocoa class <tt>NSNotification</tt>.
+ * <p>This class is loosely modeled after the Cocoa class NSNotification.</p>
  *
  * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @version 0.1
@@ -198,7 +198,7 @@ public class Packet
 	 * @return
 	 *     The packet's byte representation.
 	 * @throws IllegalArgumentException
-	 *     If <tt>key</tt> is too short.
+	 *     If key is too short.
 	 */
 	byte[] toByteArray(Key key) throws IllegalArgumentException
 	{
@@ -231,7 +231,7 @@ public class Packet
 	 * @return
 	 *     The encrypted packet data.
 	 * @throws IllegalArgumentException
-	 *     If <tt>key</tt> is too short.
+	 *     If key is too short.
 	 */
 	private static byte[] encrypt(byte[] bytes, Key key) throws IllegalArgumentException
 	{
@@ -369,7 +369,7 @@ public class Packet
 	 * @return
 	 *   The packet.
 	 * @throws IllegalArgumentException
-	 *   If <tt>key</tt> or <tt>value</tt> is <tt>null</tt>.
+	 *   If key or value is null.
 	 */
 	public Packet putProperty(String key, Object value)
 	{
@@ -394,7 +394,7 @@ public class Packet
 	 * @param key
 	 *     The property.
 	 * @return
-	 *     The value for the given property, or <tt>null</tt> if the given
+	 *     The value for the given property, or null if the given
 	 *     property is not defined.
 	 */
 	public Object getProperty(String key)
@@ -409,11 +409,11 @@ public class Packet
 	
 	/**
 	 * The type of the packet. The packet types are described in the SFXP
-	 * specification.<p>
+	 * specification.
 	 *
-	 * The name of packet types map directly to the <tt>Type</tt> name, so use
-	 * {@link #valueOf} to convert from a <tt>String</tt> object
-	 * directly to a <tt>Type</tt> value.
+	 * <p>The name of packet types map directly to the Type name, so use
+	 * {@link #valueOf} to convert from a String object
+	 * directly to a Type value.</p>
 	 */
 	public enum Type
 	{

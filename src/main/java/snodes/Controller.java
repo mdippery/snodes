@@ -175,11 +175,11 @@ public abstract class Controller implements PacketListener, PacketFilter, Connec
 	}
 	
 	/**
-	 * Returns <tt>true</tt> if the listener should accept the specified packet
+	 * Returns true if the listener should accept the specified packet
 	 * type.
 	 *
 	 * @return
-	 *     <tt>true</tt> if the packet should be accepted.
+	 *     true if the packet should be accepted.
 	 */
 	public boolean accept(Packet.Type type) {
 		//TODO: Update as more of the design is implemented.
@@ -267,11 +267,11 @@ public abstract class Controller implements PacketListener, PacketFilter, Connec
 	}
 	
 	/**
-	 * Returns a connection object for the given host, or <tt>null</tt> if such
+	 * Returns a connection object for the given host, or null if such
 	 * a connection does not exist.
 	 *
 	 * @return
-	 *     The connection object for the given host, or <tt>null</tt> if none exists.
+	 *     The connection object for the given host, or null if none exists.
 	 */
 	public SnodesConnection getConnection(InetAddress host) {
 		return connectionMap.get(host);
@@ -306,6 +306,8 @@ public abstract class Controller implements PacketListener, PacketFilter, Connec
 	 * @param address
 	 *     The IP address or hostname of the connection to
 	 *     be added.
+	 * @return
+	 *     The connection for the given IP address or hostname.
 	 */
 	public SnodesConnection addConnection(String address) {
 		try {

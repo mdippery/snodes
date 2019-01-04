@@ -27,7 +27,7 @@ package snodes.net;
  * Processes incoming packets.<p>
  *
  * A trivial listener that merely prints connection info to the screen every time
- * a packet arrives might be implemented using the following:<p>
+ * a packet arrives might be implemented using the following:
  *
  * <pre>
  * PacketListener pl = new PacketListener() {

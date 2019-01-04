@@ -32,11 +32,11 @@ import java.util.zip.CRC32;
 /**
  * A file transfer to a remote host.
  *
- * Transfers are created using {@link SnodesConnection#createTransfer}, and are
+ * <p>Transfers are created using {@link SnodesConnection#createTransfer}, and are
  * created for both outgoing transfers (<em>uploads</em> to another host) and
- * incoming transfers (<em>downloads</em> from another host to the local machine).<p>
+ * incoming transfers (<em>downloads</em> from another host to the local machine).</p>
  *
- * A use of the file transfer manager might be as follows:<p>
+ * <p>A use of the file transfer manager might be as follows:</p>
  *
  * <pre>
  * // Upload a file to another host
@@ -48,9 +48,9 @@ import java.util.zip.CRC32;
  * down.request();
  * </pre>
  *
- * <tt>FileTransfer</tt> objects are often created in response to file requests.
+ * <p>FileTransfer objects are often created in response to file requests.
  * For example, to implement a listener to listen for file requests and create a
- * new file transfer object in response, you might do this:<p>
+ * new file transfer object in response, you might do this:</p>
  *
  * <pre>
  * PacketListener ftCreator = new PacketListener() {
@@ -64,10 +64,10 @@ import java.util.zip.CRC32;
  * };
  * </pre>
  *
- * <em>The above is very important to note.</em> As of v0.1, the
- * <tt>SnodesConnection</tt> class has no way to return already-created
- * <tt>FileTransfer</tt> objects to its listeners, so the listeners (or delegates
- * of the listeners) must perform this task.
+ * <p><em>The above is very important to note.</em> As of v0.1, the
+ * SnodesConnection class has no way to return already-created
+ * FileTransfer objects to its listeners, so the listeners (or delegates
+ * of the listeners) must perform this task.</p>
  *
  * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @version 0.1
@@ -99,21 +99,21 @@ public class FileTransfer
 	}
 	
 	/**
-	 * Sends a file segment.<p>
+	 * Sends a file segment.
 	 *
-	 * <em>The byte array is automatically converted to a Base64 representation and
-	 * gzipped before being sent.</em> When incoming <tt>FileTransfer</tt> packets
+	 * <p><em>The byte array is automatically converted to a Base64 representation and
+	 * gzipped before being sent.</em> When incoming FileTransfer packets
 	 * are received, bear in mind that the data is a Base64 string that is
 	 * compressed using gzip. Thus, when receiving a file, you will have to do
-	 * the following:<p>
+	 * the following:</p>
 	 *
 	 * <pre>
 	 * String data = (String) packet.getProperty("Data");
 	 * byte[] bytes = Base64.decode(data);
 	 * </pre>
 	 *
-	 * This will work fine, since {@link snodes.util.Base64} can automatically
-	 * detect and decompress gzipped data.
+	 * <p>This will work fine, since {@link snodes.util.Base64} can automatically
+	 * detect and decompress gzipped data.</p>
 	 *
 	 * @param bytes
 	 *     The data for the file segment.
@@ -221,7 +221,7 @@ public class FileTransfer
 	
 	/**
 	 * Returns a string representation of the file transfer, which may look
-	 * like the following:<p>
+	 * like the following:
 	 *
 	 * <pre>
 	 * FileTransfer@192.168.0.2 &lt;myfile.txt&gt;

@@ -79,7 +79,7 @@ public class FileInfo {
 	 * Returns the index of the first incomplete segment.
 	 *
 	 * @return
-	 *     The index of the first incomplete segment, or <tt>-1</tt> if all
+	 *     The index of the first incomplete segment, or -1 if all
 	 *     segments are complete.
 	 */
 	public int firstMissingSegment(){

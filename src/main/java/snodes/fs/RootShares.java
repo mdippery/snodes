@@ -39,19 +39,19 @@ import java.util.logging.Logger;
 
 
 /**
- * Maintains the list of shared folders.<p>
+ * Maintains the list of shared folders.
  *
- * Since this class interacts intimately with the file system, it is implemented
+ * <p>Since this class interacts intimately with the file system, it is implemented
  * as a singleton class to avoid synchronization issues. Thus, there is only ever
  * one instance of it created. Since there is no public constructor, other classes
- * should use {@link #getInstance} to get the singleton instance of the class.<p>
+ * should use {@link #getInstance} to get the singleton instance of the class.</p>
  *
- * It seems that the <tt>sharedFolders</tt> and cache file objects are what
+ * <p>It seems that the sharedFolders and cache file objects are what
  * would be the cause of any synchronization problems in a multi-threaded
  * application of this class; therefore, they have been protected with intrinsic
  * locks. Be sure that when you need to acquire both locks, you acquire the lock on
- * the cache <em>first</em>, and <em>then</em> the lock on <tt>sharedFolders</tt>,
- * or the possibility for deadlock arrises!
+ * the cache <em>first</em>, and <em>then</em> the lock on sharedFolders,
+ * or the possibility for deadlock arrises!</p>
  *
  * @author Chris Shake
  * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
@@ -78,13 +78,13 @@ public class RootShares {
 	private Object sharedFoldersLock;
 	
 	/**
-	 * Returns the shared instance of this class. <tt>RootShares</tt> is
+	 * Returns the shared instance of this class. RootShares is
 	 * implemented as a singleton class, primarily so it can easily control
 	 * access to the data file it uses to store shared folder paths. There is
 	 * no public constructor, so classes should use this method to get instances
-	 * of <tt>RootShares</tt>, instead of creating their own objects.
+	 * of RootShares, instead of creating their own objects.
 	 *
-	 * @return An instance of <tt>RootShares</tt>.
+	 * @return An instance of RootShares.
 	 */
 	@GuardedBy("this")
 	public static synchronized RootShares getInstance()
@@ -94,13 +94,13 @@ public class RootShares {
 	}
 	
 	/**
-	 * Creates a new instance of <tt>RootShares</tt>. This constructor checks
+	 * Creates a new instance of RootShares. This constructor checks
 	 * for a pre-existing cache of shared files and loads previous shares,
-	 * or creates new blank shares.<p>
+	 * or creates new blank shares.
 	 *
-	 * This constructor is private and cannot be called outside of the class.
+	 * <p>This constructor is private and cannot be called outside of the class.
 	 * Other classes should use {@link #getInstance} to get instances of this
-	 * class instead.
+	 * class instead.</p>
 	 */
 	protected RootShares() {
 		cacheFile = new File(PathManager.getManager().getDataDirectory(), "rootdatafile.dat");
@@ -125,8 +125,8 @@ public class RootShares {
 	 * @param path
 	 *     The path to the folder.
 	 * @throws IllegalArgumentException
-	 *     If <tt>alias</tt> is already the name of a shared folder, is already 
-	 * associated with another share, or <tt>alias</tt> already exists.
+	 *     If alias is already the name of a shared folder, is already 
+	 *     associated with another share, or alias already exists.
 	 */
 	// I don't see a reason to distinguish in the way we were. If there is one,
 	//		feel free to put IOException back...
@@ -154,7 +154,9 @@ public class RootShares {
 	/**
 	 * Takes a folder out of the shares.
 	 *
-	 * @return <tt>true</tt> if successful, <tt>false</tt> if something fails.
+	 * @param alias
+	 *     Folder alias
+	 * @return true if successful, false if something fails.
 	 */
 	public boolean removeFolder(String alias) {
 		synchronized(sharedFoldersLock){
@@ -206,16 +208,16 @@ public class RootShares {
 	/**
 	 * Checks if a cache file exists for shared folders.
 	 *
-	 * @return <tt>true</tt> if the file exists.
+	 * @return true if the file exists.
 	 */
 	private boolean fileExists() {
 		return cacheFile.exists();
 	}
 	
 	/**
-	 * Loads the cache file of shared folders into memory.<p>
+	 * Loads the cache file of shared folders into memory.
 	 *
-	 * Aliases and pathnames are stored in the format:<p>
+	 * <p>Aliases and pathnames are stored in the format:</p>
 	 *
 	 * <blockquote><p><code>~/path/to/file<i>\t</i>alias</code></p></blockquote>
 	 */
@@ -252,9 +254,9 @@ public class RootShares {
 	}
 	
 	/**
-	 * Writes the current copy of the shared folder list to a file.<p>
+	 * Writes the current copy of the shared folder list to a file.
 	 *
-	 * Aliases and pathnames are stored in the format:<p>
+	 * <p>Aliases and pathnames are stored in the format:</p>
 	 *
 	 * <blockquote><p><code>~/path/to/file\talias</code></p></blockquote>
 	 */
@@ -313,14 +315,14 @@ public class RootShares {
 	}
 	
 	/**
-	 * Creates a clone of this instance. Clones of <tt>RootShares</tt> cannot
+	 * Creates a clone of this instance. Clones of RootShares cannot
 	 * be created, so this method <em>always</em> throws an exception. To get
 	 * instances of this class, use {@link #getInstance}.
 	 *
 	 * @return A copy of this instance.
 	 * @throws CloneNotSupportedException If cloning is not supported. This
 	 *	   class does not support cloning, so this method always throws a
-	 *	   <tt>CloneNotSupportedException</tt>.
+	 *	   CloneNotSupportedException.
 	 */
 	protected Object clone() throws CloneNotSupportedException
 	{

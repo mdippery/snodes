@@ -64,11 +64,11 @@ public class FileRead {
 	private Map<File, RandomAccessFile> fileMap;
 	
 	/**
-	 * Creates new instance of <tt>FileRead</tt>
+	 * Creates new instance of FileRead.
 	 *
-	 * This constructor is private and cannot be called outside of the class.
+	 * <p>This constructor is private and cannot be called outside of the class.
 	 * Other classes should use {@link #getInstance} to get instances of this
-	 * class instead.
+	 * class instead.</p>
 	 *
 	 */
 	private FileRead() {
@@ -83,7 +83,7 @@ public class FileRead {
 	 * Returns the shared instance of this class.
 	 *
 	 * @return
-	 *     An instance of <tt>FileRead</tt>.
+	 *     An instance of FileRead.
 	 */
 	public static synchronized FileRead getInstance()
 	{
@@ -132,9 +132,9 @@ public class FileRead {
 	}
 	
 	/**
-	 * Closes a random-access file.<p>
+	 * Closes a random-access file.
 	 *
-	 * Files should be closed once they have been read completely.
+	 * <p>Files should be closed once they have been read completely.</p>
 	 *
 	 * @param fileName
 	 *     The name of the file to close.
@@ -192,7 +192,7 @@ public class FileRead {
 	 * @throws IOException
 	 *     If an I/O error occurs while reading the file.
 	 * @throws FileNotFoundException
-	 *     If <tt>fileName</tt> does not exist, is
+	 *     If fileName does not exist, is
 	 *     not readable, or is not a shared file.
 	 * @throws EOFException
 	 *     If the end of the file has been reached. If this exception is thrown,
@@ -313,7 +313,7 @@ public class FileRead {
 	}
 	
 	/**
-	 * Creates a clone of this instance. Clones of <tt>FileRead</tt> cannot
+	 * Creates a clone of this instance. Clones of FileRead cannot
 	 * be created, so this method <em>always</em> throws an exception. To get
 	 * instances of this class, use {@link #getInstance}.
 	 *
@@ -321,7 +321,7 @@ public class FileRead {
 	 *     A copy of this instance.
 	 * @throws CloneNotSupportedException
 	 *     If cloning is not supported. This class does not support cloning,
-	 *     so this method always throws a <tt>CloneNotSupportedException</tt>.
+	 *     so this method always throws a CloneNotSupportedException.
 	 */
 	protected Object clone() throws CloneNotSupportedException
 	{

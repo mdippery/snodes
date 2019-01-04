@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 
 /**
  * The main executable class of the program. It provides an executable
- * <tt>main</tt> method for the program.
+ * main method for the program.
  *
  * @author Michael Schoonmaker
  * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
@@ -53,9 +53,9 @@ public final class ControllerMain {
     private static final String LOG_PATH = "snodes.log";
     
     /**
-     * The main executable method of the program.<p>
+     * The main executable method of the program.
      *
-     * The following command-line arguments are accepted:<p>
+     * <p>The following command-line arguments are accepted:</p>
      *
      * <pre>
      * -h     Print a help message and exit

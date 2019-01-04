@@ -27,6 +27,7 @@ public interface BlockCipherPadding
     /**
      * add the pad bytes to the passed in block, returning the
      * number of bytes added.
+     *
      * <p>
      * Note: this assumes that the last block of plain text is always 
      * passed to it inside in. i.e. if inOff is zero, indicating the
@@ -35,12 +36,24 @@ public interface BlockCipherPadding
      * for this is that some modes such as "trailing bit compliment"
      * base the padding on the last byte of plain text.
      * </p>
+     *
+     * @param in
+     *     Input
+     * @param inOff
+     *     Offset
+     * @return
+     *     Number of bytes added
      */
     public int addPadding(byte[] in, int inOff);
 
     /**
      * return the number of pad bytes present in the block.
-     * @exception InvalidCipherTextException if the padding is badly formed
+     *
+     * @param in
+     *     Block
+     * @return
+     *     Number of pad bytes in the block
+     * @throws InvalidCipherTextException if the padding is badly formed
      * or invalid.
      */
     public int padCount(byte[] in)

@@ -37,13 +37,13 @@ import java.net.InetAddress;
 public interface ConnectionManager
 {
 	/**
-	 * Returns the connection object for the given address, or <tt>null</tt> if
+	 * Returns the connection object for the given address, or null if
 	 * no such connection has been established.
 	 *
 	 * @param host
 	 *     The address.
 	 * @return
-	 *     The connection for the host, or <tt>null</tt> if none exists.
+	 *     The connection for the host, or null if none exists.
 	 */
 	SnodesConnection getConnection(InetAddress host);
 }

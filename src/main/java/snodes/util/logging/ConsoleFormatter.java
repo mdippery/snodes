@@ -41,7 +41,7 @@ public class ConsoleFormatter extends Formatter
 	
 	/**
 	 * Formats a message for logging purposes. The message "Debug message",
-	 * with the level INFO, would look like the following:<p>
+	 * with the level INFO, would look like the following:
 	 *
 	 * <pre>
 	 * INFO: Debug message

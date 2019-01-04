@@ -44,7 +44,7 @@ import java.util.logging.Logger;
 
 /**
  * Creates a new connection to another SFXP node. A trivial use of this connection
- * API for outgoing connections might follow this pattern:<p>
+ * API for outgoing connections might follow this pattern:
  *
  * <pre>
  * // Create a connection to 192.168.0.2
@@ -63,9 +63,9 @@ import java.util.logging.Logger;
  * conn.disconnect();
  * </pre>
  *
- * Alternatively, new connections may be received from {@link SnodesServer}. Such
+ * <p>Alternatively, new connections may be received from {@link SnodesServer}. Such
  * connections have already been set up, but must be authenticated. A trivial
- * class which authorizes all incoming connections may look like this:
+ * class which authorizes all incoming connections may look like this:</p>
  *
  * <pre>
  * // Create a listener for new connections
@@ -79,10 +79,10 @@ import java.util.logging.Logger;
  * };
  * </pre>
  *
- * A <tt>SnodesConnection</tt> can be reused between connections. In other words, a
+ * <p>A SnodesConnection can be reused between connections. In other words, a
  * connection may be created and connected, then disconnected, then reconnected.
  * However, a connection need only be authenticated once; once authenticated, it
- * can be connected and reconnected as many times as desired.
+ * can be connected and reconnected as many times as desired.</p>
  *
  * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @author Michael Schoonmaker
@@ -115,8 +115,8 @@ public class SnodesConnection
 	
 	/**
 	 * Creates a new connection to the specified host. The host can be specified
-	 * as an IP address (e.g., <tt>192.168.0.2</tt>), or as a fully-qualified
-	 * hostname (e.g., <tt>example.com</tt>).<p>
+	 * as an IP address (e.g., 192.168.0.2), or as a fully-qualified
+	 * hostname (e.g., example.com).<p>
 	 *
 	 * The connection does not connect automatically; to connect, you must call
 	 * {@link #connect} after creating a connection.
@@ -172,8 +172,8 @@ public class SnodesConnection
 	/**
 	 * Authorizes a connection by setting a session ID and an encryption key.
 	 *
-	 * The connection should be {@link #authenticate authenticated} before
-	 * authorization.
+	 * <p>The connection should be {@link #authenticate authenticated} before
+	 * authorization.</p>
 	 *
 	 * @param id
 	 *     The session ID number.
@@ -190,12 +190,12 @@ public class SnodesConnection
 	}
 	
 	/**
-	 * Accepts the connection. This is in response to a connection request.<p>
+	 * Accepts the connection. This is in response to a connection request.
 	 *
-	 * The connection should be {@link #authenticate authenticated} and
-	 * {@link #authorize authorized} first.<p>
+	 * <p>The connection should be {@link #authenticate authenticated} and
+	 * {@link #authorize authorized} first.</p>
 	 *
-	 * Essentially this method corresponds to an <tt>AcceptConnection</tt> packet.
+	 * <p>Essentially this method corresponds to an AcceptConnection packet.</p>
 	 *
 	 * @throws IOException
 	 *     If the connection cannot be authorized.
@@ -235,6 +235,8 @@ public class SnodesConnection
 	 *
 	 * @param file
 	 *     The name of the shared file to transfer.
+	 * @return
+	 *     The new file transfer.
 	 */
 	public FileTransfer createTransfer(String file)
 	{
@@ -261,11 +263,11 @@ public class SnodesConnection
 	
 	/**
 	 * Registers a packet listener. A packet listener will be notified of all
-	 * packet events that occur on this connection.<p>
+	 * packet events that occur on this connection.
 	 *
-	 * Packet listeners can be added for a number of reasons, and offer a way to
+	 * <p>Packet listeners can be added for a number of reasons, and offer a way to
 	 * interact with the connection. For example, if you want to be alerted every
-	 * time this connection receives a file request, you might use this code:<p>
+	 * time this connection receives a file request, you might use this code:</p>
 	 *
 	 * <pre>
 	 * PacketListener pl = new PacketListener() {
@@ -285,7 +287,7 @@ public class SnodesConnection
 	 * conn.addListener(pl, pf);
 	 * </pre>
 	 *
-	 * Packet listeners are often used to be notified of file transfers, too:<p>
+	 * <p>Packet listeners are often used to be notified of file transfers, too:</p>
 	 *
 	 * <pre>
 	 * PacketListener pl = new PacketListener() {
@@ -305,13 +307,13 @@ public class SnodesConnection
 	 * conn.addListener(pfl, pff);
 	 * </pre>
 	 *
-	 * Packet listeners are notified on the same thread as the connection, so
+	 * <p>Packet listeners are notified on the same thread as the connection, so
 	 * listeners should do their work as soon as possible, or spawn another thread
-	 * to do the work.<p>
+	 * to do the work.</p>
 	 *
-	 * <em>There is no way to add a listener to a {@link FileTransfer}</em>, so
+	 * <p><em>There is no way to add a listener to a {@link FileTransfer}</em>, so
 	 * observers interested in file transfers must add listeners to this connection
-	 * instead.
+	 * instead.</p>
 	 *
 	 * @param listener
 	 *     The packet listener.
@@ -371,15 +373,15 @@ public class SnodesConnection
 	}
 	
 	/**
-	 * Returns <tt>true</tt> if this object is equal to <tt>obj</tt>.<p>
+	 * Returns true if this object is equal to obj.
 	 *
-	 * This object is equal to other <tt>SnodesConnection</tt> objects with the
-	 * same ID number.
+	 * <p>This object is equal to other SnodesConnection objects with the
+	 * same ID number.</p>
 	 *
 	 * @param obj
 	 *     The other object.
 	 * @return
-	 *     <tt>true</tt> if the objects are equal.
+	 *     true if the objects are equal.
 	 */
 	@Override
 	public boolean equals(Object obj)
@@ -408,7 +410,7 @@ public class SnodesConnection
 	
 	/**
 	 * Returns a string representation of the connection. Such a representation
-	 * contains the class name and remote host, in this format:<p>
+	 * contains the class name and remote host, in this format:
 	 *
 	 * <pre>
 	 * SnodesConnection@192.168.0.2

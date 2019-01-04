@@ -35,9 +35,9 @@ import java.util.logging.Logger;
 
 
 /**
- * Handles incoming connections via the Snodes protocol.<p>
+ * Handles incoming connections via the Snodes protocol.
  *
- * A typical use of <tt>SnodesServer</tt> looks like this:<p>
+ * <p>A typical use of SnodesServer looks like this:</p>
  *
  * <pre>
  * // Get the server instance
@@ -49,8 +49,8 @@ import java.util.logging.Logger;
  * server.start();
  * </pre>
  *
- * The server runs in its own thread, and will be shut down automatically when
- * the Java VM exits. There is no way to manually stop or restart the server.
+ * <p>The server runs in its own thread, and will be shut down automatically when
+ * the Java VM exits. There is no way to manually stop or restart the server.</p>
  *
  * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @version 0.1
@@ -78,7 +78,7 @@ public class SnodesServer
 	/** The object responsible for tracking connections. */
 	private ConnectionManager connectionManager;
 	
-	/** Creates a new instance of <tt>SnodesServer</tt>. */
+	/** Creates a new instance of SnodesServer. */
 	private SnodesServer()
 	{
 		connectionManager = null;
@@ -95,10 +95,10 @@ public class SnodesServer
 	}
 	
 	/**
-	 * Gets the application-wide instance of <tt>SnodesServer</tt>.
+	 * Gets the application-wide instance of SnodesServer.
 	 *
 	 * @return
-	 *     The singleton instance of <tt>SnodesServer</tt>.
+	 *     The singleton instance of SnodesServer.
 	 */
 	@GuardedBy("this")
 	public static synchronized SnodesServer getInstance()

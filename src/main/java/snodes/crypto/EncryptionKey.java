@@ -57,7 +57,7 @@ public class EncryptionKey implements Key
 	
 	/**
 	 * Returns a string representation of the key. The string returned is
-	 * identical to the one as returned by <tt>Arrays.toString(this.toByteArray())</tt>.
+	 * identical to the one as returned by Arrays.toString(this.toByteArray()).
 	 *
 	 * @return
 	 *     A string representation of the key's bytes.

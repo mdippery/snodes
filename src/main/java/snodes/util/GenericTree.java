@@ -33,10 +33,10 @@ import java.util.NoSuchElementException;
  * inherent hierarchical ordering of its data, and each node in the tree can
  * have any number of children.<p>
  *
- * <tt>GenericTree</tt> is perfect to use as a base class for more specialized
+ * GenericTree is perfect to use as a base class for more specialized
  * tree structures, such as binary search trees or red-black trees.<p>
  *
- * <tt>GenericTree</tt> is not inherently threadsafe.
+ * GenericTree is not inherently threadsafe.
  *
  * @author <a href="mailto:michael@monkey-robot.com">Michael Dippery</a>
  * @version 0.1
@@ -75,10 +75,10 @@ public class GenericTree<T>
 	}
 	
 	/**
-	 * Returns <tt>true</tt> if this node is allowed to have children.
+	 * Returns true if this node is allowed to have children.
 	 *
 	 * @return
-	 *     <tt>true</tt> if this node can have children.
+	 *     true if this node can have children.
 	 */
 	public boolean allowsChildren()
 	{
@@ -88,6 +88,8 @@ public class GenericTree<T>
 	/**
 	 * Gets the child at the specified index.
 	 *
+	 * @param i
+	 *    Index of the child to return.
 	 * @return
 	 *    The child at the specified index.
 	 * @throws IndexOutOfBoundsException
@@ -110,10 +112,12 @@ public class GenericTree<T>
 	}
 	
 	/**
-	 * Returns the index of the specified child. If <tt>child</tt> is not
-	 * a child of this node, then a <tt>NoSuchElementException</tt> is
+	 * Returns the index of the specified child. If child is not
+	 * a child of this node, then a NoSuchElementException is
 	 * thrown.
 	 *
+     * @param child
+     *     The child whose index we are searching for.
 	 * @return
 	 *     The index of the specified child.
 	 * @throws NoSuchElementException
@@ -135,7 +139,7 @@ public class GenericTree<T>
 	 * Returns the data object contained in this node.
 	 *
 	 * @return
-	 *     This node's data object. The object may be <tt>null</tt>.
+	 *     This node's data object. The object may be null.
 	 */
 	public T getObject()
 	{
@@ -167,7 +171,7 @@ public class GenericTree<T>
 	
 	/**
 	 * Adds the specified node to the tree at the desired index. The greatest
-	 * index is equal to <tt>children.size()</tt>; any greater index will
+	 * index is equal to children.size(); any greater index will
 	 * result in the node being added to the last available slot. An index
 	 * less than 0 will result in the node being added to the first slot.
 	 *
@@ -188,10 +192,10 @@ public class GenericTree<T>
 	}
 	
 	/**
-	 * Returns <tt>true</tt> if the node has no children.
+	 * Returns true if the node has no children.
 	 *
 	 * @return
-	 *     <tt>true</tt> if the node is a leaf node.
+	 *     true if the node is a leaf node.
 	 */
 	public boolean isLeaf()
 	{
@@ -199,12 +203,12 @@ public class GenericTree<T>
 	}
 	
 	/**
-	 * Returns <tt>true</tt> if the specified node is a child of this node.
+	 * Returns true if the specified node is a child of this node.
 	 *
 	 * @param node
 	 *     The node.
 	 * @return
-	 *     <tt>true</tt> if <tt>node</tt> is a child of this node.
+	 *     true if node is a child of this node.
 	 */
 	public boolean hasChild(GenericTree<T> node)
 	{
@@ -216,7 +220,7 @@ public class GenericTree<T>
 	 *
 	 * @return
 	 *     The string representation of the node's data object. This is the
-	 *     same as calling <tt>String.valueOf({@link #object})</tt>.
+	 *     same as calling String.valueOf({@link #object}).
 	 */
 	@Override
 	public String toString()
