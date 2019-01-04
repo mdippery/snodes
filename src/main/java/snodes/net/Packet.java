@@ -166,9 +166,9 @@ public class Packet
 							
 							if (value.charAt(last) == 'L') {
 								value = value.substring(0, last);
-								packet.putProperty(prop, new Long(value));
+								packet.putProperty(prop, Long.valueOf(value));
 							} else {
-								packet.putProperty(prop, new Integer(value));
+								packet.putProperty(prop, Integer.valueOf(value));
 							}
 						} catch (NumberFormatException e) {
 							throw new RuntimeException(e);

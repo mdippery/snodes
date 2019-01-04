@@ -137,12 +137,12 @@ public class FileTransfer
 		hash = crc.getValue();
 		
 		Packet packet = new Packet(Packet.Type.TransferFile);
-		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("Id", Integer.valueOf(owner.getID()));
 		packet.putProperty("ShareName", filename);
-		packet.putProperty("TotalSize", new Long(size));
-		packet.putProperty("SegmentSize", new Integer(bytes.length));
-		packet.putProperty("Segment", new Integer(seg));
-		packet.putProperty("Hash", new Long(hash));
+		packet.putProperty("TotalSize", Long.valueOf(size));
+		packet.putProperty("SegmentSize", Integer.valueOf(bytes.length));
+		packet.putProperty("Segment", Integer.valueOf(seg));
+		packet.putProperty("Hash", Long.valueOf(hash));
 		packet.putProperty("Data", data);
 		owner.sendPacket(packet);
 	}
@@ -159,7 +159,7 @@ public class FileTransfer
 	public void request() throws IOException
 	{
 		Packet packet = new Packet(Packet.Type.RequestFile);
-		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("Id", Integer.valueOf(owner.getID()));
 		packet.putProperty("ShareName", filename);
 		owner.sendPacket(packet);
 	}
@@ -177,9 +177,9 @@ public class FileTransfer
 	public void request(int seg) throws IOException
 	{
 		Packet packet = new Packet(Packet.Type.RequestAgain);
-		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("Id", Integer.valueOf(owner.getID()));
 		packet.putProperty("ShareName", filename);
-		packet.putProperty("Segment", new Integer(seg));
+		packet.putProperty("Segment", Integer.valueOf(seg));
 		owner.sendPacket(packet);
 	}
 	
@@ -192,7 +192,7 @@ public class FileTransfer
 	public void cancel() throws IOException
 	{
 		Packet packet = new Packet(Packet.Type.CancelTransfer);
-		packet.putProperty("Id", new Integer(owner.getID()));
+		packet.putProperty("Id", Integer.valueOf(owner.getID()));
 		packet.putProperty("ShareName", filename);
 		owner.sendPacket(packet);
 	}

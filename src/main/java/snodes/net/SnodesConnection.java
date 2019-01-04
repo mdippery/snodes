@@ -210,7 +210,7 @@ public class SnodesConnection
 		String base64key = Base64.encodeBytes(encryptKey.toByteArray()); // Not gzipped!
 		Packet packet = new Packet(Packet.Type.AcceptConnection);
 		packet.putProperty("Passkey", passkey.toString());
-		packet.putProperty("Id", new Integer(id));
+		packet.putProperty("Id", Integer.valueOf(id));
 		packet.putProperty("EncryptKey", base64key);
 		sendPacket(packet);
 	}
