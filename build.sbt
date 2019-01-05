@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Michael Dippery <michael@monkey-robot.com>
+ * Copyright (c) 2017-2019 Michael Dippery <michael@monkey-robot.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -22,17 +22,5 @@ lazy val root = (project in file("."))
   .settings(
     name         := "snodes",
     organization := "com.mipadi",
-    version      := "0.2-SNAPSHOT",
-
-    crossPaths       := false,
-    autoScalaLibrary := false,
-
-    // javacOptions += "-Xlint:deprecation",
-
-    libraryDependencies ++= Seq(
-      "dnsjava" % "dnsjava" % "2.1.8",
-      "gnu.getopt" % "java-getopt" % "1.0.13",
-      "junit" % "junit" % "4.12" % Test,
-      "com.novocode" % "junit-interface" % "0.11" % Test
-    )
+    version      := "0.3-SNAPSHOT",
   )
